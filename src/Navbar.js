@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import { Col } from 'react-bootstrap';
+
 
 class Navbar extends Component {
   constructor(props) {
@@ -10,42 +12,52 @@ class Navbar extends Component {
 
 
   render() {
-    const { navbarStyle, brandStyle, menuItemStyle, selectedStyle } = styles;
+    const { navbarStyle, menuItemStyle, selectedStyle } = styles;
 
     return (
-      <div className="Navbar col-md-1" style={navbarStyle}>
-        <h2 className="brand" style={brandStyle}>Dash Reactor</h2>
+      <Col className="Navbar" style={navbarStyle}>
+       {/* <h2 className="brand" style={brandStyle}>Dash Reactor</h2>*/}
+        <img alt="dashReactorLogo" src={require('../public/dashReactorLogo.png')} style={{marginLeft: 10, marginTop: -90}}/>
         <i className="fa fa-book fa-2x" aria-hidden="true" style={{...menuItemStyle, ...selectedStyle}}></i>
         <br />
         <i className="fa fa-user fa-2x" aria-hidden="true" style={menuItemStyle}></i>
-      </div>
+      </Col>
     );
   }
 }
 
 const lightGrey = '#A3A8AB'
 const darkGrey = '#777A7D'
+const coral = '#FA848A'
+
 
 const styles = {
   navbarStyle: {
     height: '100%',
-    backgroundColor: '#2c3e50',
+    width: 50,
+    // backgroundColor: '#2c3e50',
     position: 'fixed',
     paddingLeft: 20,
     paddingTop: 100,
     fontFamily: 'Lato',
+    // minWidth: 169,
+
   },
-  brandStyle: {
-    color: darkGrey,
-  },
+  // brandStyle: {
+  //   color: darkGrey,
+  //   textOrientation: 'sideways',
+  // },
   menuItemStyle: {
     color: lightGrey,
     marginTop: 25,
     cursor: 'pointer',
     opacity: 0.4,
+    display:'block',
+    paddingLeft:20,
+    fontSize: 50,
   },
   selectedStyle: {
-    color: 'white',
+    color: coral,
     opacity: 1,
   }
 }
