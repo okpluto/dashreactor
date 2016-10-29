@@ -19,7 +19,6 @@ class App extends Component {
   }
 
   handleLessonClick (lesson) {
-
     this.setState({
       selectedLesson: lesson,
       selectedLessonQuestions: lesson.lessonContent,
@@ -28,13 +27,23 @@ class App extends Component {
   }
 
   handleQuestionClick (question) {
-    this.setState({
-      selectedQuestion: question
-    });
+    if (!this.state.selectedQuestion) {
+      this.setState({
+        selectedQuestion: question
+      });
+    } else {
+      this.setState({
+        selectedQuestion: null
+      })
+      // this.setState({
+      //   selectedQuestion: question
+      // })
+    }
   }
 
   renderQuestionList () {
-    if (this.state.selectedLesson !== null) {
+
+    if (this.state.selectedLesson) {
 
       return (
         <QuestionTitleList
@@ -47,14 +56,16 @@ class App extends Component {
   }
 
   renderQuestionDetail () {
-
     if (this.state.selectedQuestion) {
-
       return (
         <QuestionDetail
           title={this.state.selectedLessonTitle}
           question={this.state.selectedQuestion}
         />
+      )
+    } else {
+      return (
+        <div></div>
       )
     }
   }

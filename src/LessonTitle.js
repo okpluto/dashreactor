@@ -19,7 +19,6 @@ class LessonTitle extends Component {
       }
     );
     this.props.handleLessonClick.call(this, this.props)
-
   }
 
   renderTitles() {
@@ -36,8 +35,6 @@ class LessonTitle extends Component {
     return (
       <div>
         {this.renderTitles()}
-        {// {this.renderQuestionList()}
-      }
       </div>
     )
   }
