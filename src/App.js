@@ -44,7 +44,6 @@ class App extends Component {
   renderQuestionList () {
 
     if (this.state.selectedLesson) {
-
       return (
         <QuestionTitleList
           title={this.state.selectedLessonTitle}

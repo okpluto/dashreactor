@@ -11,9 +11,10 @@ class QuestionTitleList extends Component {
     // }
   }
 
+
   render () {
 
-    const { questionListStyle } = styles;
+    const { questionListStyle, fontAwesomeStyle } = styles;
 
     return (
       <Col sm={3} smOffset={4} xs={3} xsOffset={5} style={questionListStyle} >
@@ -29,25 +30,39 @@ class QuestionTitleList extends Component {
             )
           })
         }
+        <i className="fa fa-plus-circle" aria-hidden="true" style={fontAwesomeStyle}></i>
       </Col>
     )
   }
 }
 
 const coral = '#FA848A'
+const lightGrey = '#A3A8AB'
+
 
 const styles = {
   questionListStyle: {
     height: '100%',
     position: 'fixed',
     paddingRight: 0,
+    paddingLeft: 5,
     paddingLeft:0,
     paddingTop: 100,
     marginTop: 0,
     fontFamily: 'Lato',
     zIndex: -1,
     fontSize: 18,
-  }
+    boxShadow: '2px 0px 5px -1px rgba(0,0,0,0.2)',
+  },
+
+  fontAwesomeStyle: {
+    color: '#DADCDD',
+    display: 'inline',
+    marginLeft: 30,
+    paddingTop: 50,
+    // textAlign: 'left',
+    fontSize: 40,
+  },
 }
 
 export default QuestionTitleList

@@ -22,24 +22,25 @@ class QuestionDetail extends Component {
 
 
   renderAnswers() {
-    const { QuestionDetailStyle, editableTextStyle } = styles;
+    const { answerInputStyle, fontAwesomeStyle } = styles;
     if (this.props.question.choices) {
-      {console.log(this.state.inputs)}
       return (
         <div>
-        <h2>Answers</h2>
-        <ul>
-          {this.state.inputs.map(choiceInput => {
-            return <li style={{listStyleType: 'none', marginLeft: -40}}><input style={styles.answerInputStyle} defaultValue={choiceInput}/></li>;
-          })}
-        </ul>
-        <Button onClick={this.addChoice.bind(this)}>Add another choice</Button>
+          <h2>Answers</h2>
+            {this.state.inputs.map(choiceInput => {
+              return (
+                <div>
+                  <input style={answerInputStyle} placeholder="..." defaultValue={choiceInput}/>
+                </div>
+              )
+            })}
+          <i className="fa fa-plus-circle" aria-hidden="true" style={fontAwesomeStyle}></i><p onClick={this.addChoice.bind(this)} style={{display: "inline"}}> Add another choice</p>
         </div>
       )
     }
   }
 
-  //adds another text input for choices, up to 5
+  //adds another text input for answer choices, up to 5 total
   addChoice() {
     if (this.state.inputs.length < 5) {
       let choices = this.state.inputs;
@@ -49,15 +50,19 @@ class QuestionDetail extends Component {
   }
 
   render() {
-    const { QuestionDetailStyle, editableTextStyle } = styles;
+    const { QuestionDetailStyle, editableTextStyle, saveButtonStyle } = styles;
     return (
       <Col sm={5} smOffset={7} style={QuestionDetailStyle}>
+        <i style={{color: lightGrey}}>Click elements to edit</i>
         {this.renderQuestion()}
         {this.renderAnswers()}
+        <Button style={saveButtonStyle}>Save</Button>
       </Col>
     )
   }
 }
+const coral = '#FA848A'
+const lightGrey = '#A3A8AB'
 
 const styles = {
   QuestionDetailStyle: {
@@ -74,17 +79,33 @@ const styles = {
     zIndex: -1,
   },
 
+  fontAwesomeStyle: {
+    color: lightGrey,
+    display: 'inline',
+    paddingRight: 3,
+  },
+
   answerInputStyle: {
-    border: 'none'
+    border: 'none',
+    display: 'inline',
+    color: '#7A7886'
   },
 
   editableTextStyle: {
     padding: 10,
-    color: 'black',
+    color: '#7A7886',
     opacity: 1,
-    border: 'none',
+    border: 0.2,
     textAlign: 'justified',
-    outline: 'none'
+    // outline: 'none',
+    display: 'inline-block'
+  },
+
+  saveButtonStyle: {
+    color: 'white',
+    backgroundColor: coral,
+    marginTop: 50,
+    marginLeft: 200
   }
 }
 
