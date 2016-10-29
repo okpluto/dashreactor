@@ -33,7 +33,7 @@ const lessonDummyData = [
 {
   "lessonInfo": {
     "_id": "",
-    "title": "Hello again World",
+    "title": "For Loops",
     "description": "I'm #2!",
     "__v": 0
   },
@@ -52,7 +52,7 @@ const lessonDummyData = [
     },
     {
       "_id": "",
-      "text": "This is a test of our lesson schema. part",
+      "text": "This is a test of our lesson schema. part 2",
       "lessonId": "",
       "__v": 0,
       "order": 0
@@ -62,7 +62,7 @@ const lessonDummyData = [
 {
   "lessonInfo": {
     "_id": "",
-    "title": "HelloAGAIN World",
+    "title": "Functions",
     "description": "I'm #2!",
     "__v": 0
   },
@@ -81,7 +81,7 @@ const lessonDummyData = [
     },
     {
       "_id": "",
-      "text": "This is a test of our lesson schema. part ####3333333",
+      "text": "This is a test of our lesson schema. part #3",
       "lessonId": "",
       "__v": 0,
       "order": 0

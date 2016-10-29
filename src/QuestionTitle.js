@@ -1,6 +1,4 @@
 import React, { Component } from 'react';
-import LessonDummyData from './LessonDummyData';
-import QuestionTitleList from './QuestionTitleList';
 
 
 class QuestionTitle extends Component {
@@ -11,36 +9,38 @@ class QuestionTitle extends Component {
     }
   }
 
+  handleClick () {
+    this.setState({clicked: !this.state.clicked});
+    this.props.handleQuestionClick.call(this, this.props.questionContent)
+  }
+
   render () {
-    const { titleStyle, selectedStyle } = styles;
+    const { defaultStyle, selectedStyle } = styles;
+    let titleStyle = this.state.clicked ? {...defaultStyle, ...selectedStyle} : defaultStyle
     return (
-      // <div style = {this.state.clicked ? {selectedStyle} : {titleStyle}} onClick={this.handleClick}>
-      <div style = {titleStyle}>
-      {console.log(this.props.questionContent)}
+      <div style={titleStyle} onClick={this.handleClick.bind(this)}>
         <p>{this.props.title}</p>
       </div>
     )
   }
 }
 
-const lightGrey = '#A3A8AB'
-const darkGrey = '#777A7D'
+// const lightGrey = '#A3A8AB'
 const coral = '#FA848A'
 
 
 
 const styles = {
-  titleStyle: {
-    backgroundColor: 'lightGrey',
+  defaultStyle: {
     width: '100%',
-    height: 20,
+    backgroundColor: 'white',
+    height: 60,
     paddingLeft: 10,
-    marginBottom: 20,
     fontFamily: 'Lato',
   },
   selectedStyle: {
     color: 'white',
-    backgroundColor: 'coral',
+    backgroundColor: coral,
     opacity: 1,
   }
 }

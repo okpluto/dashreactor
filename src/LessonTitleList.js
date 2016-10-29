@@ -15,14 +15,20 @@ class LessonTitleList extends Component {
   }
 
   render () {
-    const { LessonTitleListStyle} = styles;
+    const { LessonTitleListStyle } = styles;
 
     return (
       <Col sm={3} style={LessonTitleListStyle} >
         {
           this.state.lessons.map(lesson => {
-          return <LessonTitle title={lesson.lessonInfo.title} lessonContent={lesson.lessonContent} />
-          } )
+            return (
+              <LessonTitle
+                handleLessonClick={this.props.handleLessonClick.bind(this)}
+                title={lesson.lessonInfo.title}
+                lessonContent={lesson.lessonContent}
+              />
+            )
+          })
         }
       </Col>
     )
@@ -33,10 +39,11 @@ const styles = {
   LessonTitleListStyle: {
     height: '100%',
     fontSize: 20,
-    backgroundColor: 'lightGrey',
+    // backgroundColor: 'lightGrey',
     position: 'fixed',
     paddingTop: 100,
-    paddingLeft: 20,
+    paddingRight: 0,
+    paddingLeft:0,
     marginLeft: 100,
     fontFamily: 'Lato',
     zIndex: -1,

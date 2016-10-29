@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Button, Col, Row } from 'react-bootstrap';
+import { Col } from 'react-bootstrap';
 
 
 class Navbar extends Component {
@@ -12,12 +12,12 @@ class Navbar extends Component {
 
 
   render() {
-    const { navbarStyle, brandStyle, menuItemStyle, selectedStyle } = styles;
+    const { navbarStyle, menuItemStyle, selectedStyle } = styles;
 
     return (
       <Col className="Navbar" style={navbarStyle}>
        {/* <h2 className="brand" style={brandStyle}>Dash Reactor</h2>*/}
-        <img class="img-responsive" src={require('../public/dashReactorLogo.png')} style={{marginLeft: 10, marginTop: -90}}/>
+        <img alt="dashReactorLogo" src={require('../public/dashReactorLogo.png')} style={{marginLeft: 10, marginTop: -90}}/>
         <i className="fa fa-book fa-2x" aria-hidden="true" style={{...menuItemStyle, ...selectedStyle}}></i>
         <br />
         <i className="fa fa-user fa-2x" aria-hidden="true" style={menuItemStyle}></i>
@@ -40,13 +40,13 @@ const styles = {
     paddingLeft: 20,
     paddingTop: 100,
     fontFamily: 'Lato',
-    minWidth: 169,
+    // minWidth: 169,
 
   },
-  brandStyle: {
-    color: darkGrey,
-    textOrientation: 'sideways',
-  },
+  // brandStyle: {
+  //   color: darkGrey,
+  //   textOrientation: 'sideways',
+  // },
   menuItemStyle: {
     color: lightGrey,
     marginTop: 25,
@@ -57,7 +57,7 @@ const styles = {
     fontSize: 50,
   },
   selectedStyle: {
-    color: 'coral',
+    color: coral,
     opacity: 1,
   }
 }
