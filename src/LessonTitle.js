@@ -51,10 +51,11 @@ const styles = {
     paddingLeft: 10,
     fontFamily: 'Lato',
     paddingBottom: 15,
+    cursor: 'pointer',
   },
   selectedStyle: {
     backgroundColor: coral,
-    color: 'white'
+    color: 'white',
   }
 
 }

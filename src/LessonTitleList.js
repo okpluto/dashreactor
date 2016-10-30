@@ -12,6 +12,19 @@ class LessonTitleList extends Component {
       lessons: LessonDummyData,
       clicked: ''
     }
+    this.getLessonTitles();
+  }
+
+  getLessonTitles() {
+    let url = 'http://127.0.0.1:3011/api/lessons';
+
+    fetch(url)
+    .then(data => {
+      return data.json()
+    })
+    .then(data => {
+      console.log('DATA =>', data)
+    })
   }
 
   render () {
