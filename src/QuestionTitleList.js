@@ -30,7 +30,7 @@ class QuestionTitleList extends Component {
             )
           })
         }
-        <i className="fa fa-plus-circle" aria-hidden="true" style={fontAwesomeStyle}></i>
+        <i onClick={this.props.handleAddQuestionClick} className="fa fa-plus-circle" aria-hidden="true" style={fontAwesomeStyle} ></i>
       </Col>
     )
   }
