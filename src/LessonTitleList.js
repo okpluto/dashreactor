@@ -39,14 +39,15 @@ const styles = {
   LessonTitleListStyle: {
     height: '100%',
     fontSize: 20,
-    // backgroundColor: 'lightGrey',
+    backgroundColor: 'white',
     position: 'fixed',
     paddingTop: 100,
     paddingRight: 0,
     paddingLeft:0,
     marginLeft: 100,
     fontFamily: 'Lato',
-    zIndex: -1,
+    zIndex: 0,
+    boxShadow: '0px 0px 5px -1px rgba(0,0,0,0.2)',
   },
 }
 

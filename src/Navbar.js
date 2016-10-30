@@ -35,18 +35,12 @@ const styles = {
   navbarStyle: {
     height: '100%',
     width: 50,
-    // backgroundColor: '#2c3e50',
     position: 'fixed',
     paddingLeft: 20,
     paddingTop: 100,
     fontFamily: 'Lato',
-    // minWidth: 169,
-
   },
-  // brandStyle: {
-  //   color: darkGrey,
-  //   textOrientation: 'sideways',
-  // },
+
   menuItemStyle: {
     color: lightGrey,
     marginTop: 25,
@@ -56,6 +50,7 @@ const styles = {
     paddingLeft:20,
     fontSize: 50,
   },
+
   selectedStyle: {
     color: coral,
     opacity: 1,

@@ -79,6 +79,18 @@ const lessonDummyData = [
       ],
       "order": 1
     },
+      {
+      "_id": "",
+      "text": "_________('HIIIIIIII world!')",
+      "answer": "console.log",
+      "lessonId": "",
+      "__v": 0,
+      "choices": [
+        "console.log",
+        "print"
+      ],
+      "order": 2
+    },
     {
       "_id": "",
       "text": "This is a test of our lesson schema. part #3",

@@ -35,7 +35,7 @@ const styles = {
     width: '100%',
     backgroundColor: 'white',
     height: 60,
-    paddingLeft: 10,
+    paddingLeft: 25,
     fontFamily: 'Lato',
   },
   selectedStyle: {
