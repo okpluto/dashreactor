@@ -35,8 +35,9 @@ const styles = {
     width: '100%',
     backgroundColor: 'white',
     height: 60,
-    paddingLeft: 25,
+    paddingLeft: 0,
     fontFamily: 'Lato',
+    cursor: 'pointer',
   },
   selectedStyle: {
     color: 'white',
