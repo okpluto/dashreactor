@@ -66,8 +66,8 @@ const styles = {
   fontAwesomeStyle: {
     color: '#DADCDD',
     display: 'inline',
-    marginLeft: 30,
-    paddingTop: 50,
+    marginLeft: 10,
+    marginTop: 50,
     // textAlign: 'left',
     fontSize: 40,
   },

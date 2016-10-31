@@ -40,19 +40,19 @@ const lessonDummyData = [
   "lessonContent": [
     {
       "_id": "",
-      "text": "_________('HEY world!')",
-      "answer": "console.log",
+      "text": "Select the correct syntax below",
+      "answer": "for (var i = 0; i < arr.length; arr++) {...}",
       "lessonId": "",
       "__v": 0,
       "choices": [
-        "console.log",
-        "print"
+        "for (i=0, i<5, i++) {...}",
+        "(for var i=0; i<5; i++) {...}",
       ],
       "order": 1
     },
     {
       "_id": "",
-      "text": "This is a test of our lesson schema. part 2",
+      "text": "'For Loops' are a way to...",
       "lessonId": "",
       "__v": 0,
       "order": 0
