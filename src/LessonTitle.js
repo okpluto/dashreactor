@@ -1,31 +1,22 @@
 import React, { Component } from 'react';
-// import LessonDummyData from './LessonDummyData';
 import QuestionTitleList from './QuestionTitleList';
 
 
 class LessonTitle extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      clicked: false,
-      selectedLesson: {}
-    }
-  }
-
-  handleClick() {
-    this.setState(
-      {
-        clicked: !this.state.clicked,
-      }
-    );
-    this.props.handleLessonClick.call(this, this.props)
   }
 
   renderTitles() {
+
+    /*sets the style to be either selected+default or default style alone, depending on the selectedLesson prop in app.js's state.*/
+
     const { defaultStyle, selectedStyle } = styles;
-    let titleStyle = this.state.clicked ? {...defaultStyle, ...selectedStyle} : defaultStyle
+
+    let titleStyle = this.props.isSelectedLesson ? {...defaultStyle, ...selectedStyle} : defaultStyle
+
     return (
-      <div style={titleStyle} onClick={this.handleClick.bind(this)}>
+      <div style={titleStyle} onClick={this.props.handleLessonClick.bind(this, this.props)}>
         <p>{this.props.title}</p>
       </div>
     );

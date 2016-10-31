@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
-import LessonDummyData from './LessonDummyData';
 import LessonTitle from './LessonTitle';
 import { Col } from 'react-bootstrap';
 
+import LessonDummyData from './LessonDummyData';
 
 
 class LessonTitleList extends Component {
@@ -10,11 +10,11 @@ class LessonTitleList extends Component {
     super(props);
     this.state = {
       lessons: LessonDummyData,
-      clicked: ''
     }
     this.getLessonTitles();
   }
 
+//not actually using live data yet
   getLessonTitles() {
     let url = 'http://127.0.0.1:3011/api/lessons';
 
@@ -31,11 +31,14 @@ class LessonTitleList extends Component {
     const { LessonTitleListStyle } = styles;
 
     return (
-      <Col sm={3} style={LessonTitleListStyle} >
+      <Col sm={3} style={LessonTitleListStyle}>
         {
           this.state.lessons.map(lesson => {
+            let isSelectedLesson = lesson.lessonInfo.title === this.props.selectedLessonTitle
+
             return (
               <LessonTitle
+                isSelectedLesson={isSelectedLesson}
                 handleLessonClick={this.props.handleLessonClick.bind(this)}
                 title={lesson.lessonInfo.title}
                 lessonContent={lesson.lessonContent}

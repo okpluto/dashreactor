@@ -20,6 +20,7 @@ class App extends Component {
     }
   }
 
+
   handleLessonClick (lesson) {
     this.setState({
       selectedLesson: lesson,
@@ -27,6 +28,7 @@ class App extends Component {
       selectedLessonTitle: lesson.title
     });
   }
+
 
   handleQuestionClick (question) {
     if (!this.state.selectedQuestion) {
@@ -37,16 +39,15 @@ class App extends Component {
       this.setState({
         selectedQuestion: null
       })
-      // this.setState({
-      //   selectedQuestion: question
-      // })
     }
   }
 
+//enables appearance of question-creation form
   handleAddQuestionClick (lesson) {
     this.setState({creatingQuestion: true});
   }
 
+//at the moment this just clears the question creation form.
   handleSaveNewQuestionClick () {
     this.setState({creatingQuestion: false});
   }
@@ -57,13 +58,14 @@ class App extends Component {
     }
   }
 
-  renderQuestionList () {
 
+  renderQuestionList () {
     if (this.state.selectedLesson) {
       return (
         <QuestionTitleList
           title={this.state.selectedLessonTitle}
           lessonContent={this.state.selectedLessonQuestions}
+          selectedQuestion={this.state.selectedQuestion}
           handleQuestionClick={this.handleQuestionClick.bind(this)}
           handleAddQuestionClick={this.handleAddQuestionClick.bind(this)}
         />
@@ -71,6 +73,7 @@ class App extends Component {
     }
   }
 
+//this is the component that displays the text and choices of currently selected question - can add choices but currently does not save. Also, does not currently display WHICH choice is the correct answer.
   renderQuestionDetail () {
     if (this.state.selectedQuestion) {
       return (
@@ -78,10 +81,6 @@ class App extends Component {
           title={this.state.selectedLessonTitle}
           question={this.state.selectedQuestion}
         />
-      )
-    } else {
-      return (
-        <div></div>
       )
     }
   }
@@ -92,7 +91,7 @@ class App extends Component {
       <Row className="App">
         <Navbar />
         <div className="container-fluid">
-        <LessonTitleList handleLessonClick={this.handleLessonClick.bind(this)}/>
+        <LessonTitleList selectedLessonTitle={this.state.selectedLessonTitle} handleLessonClick={this.handleLessonClick.bind(this)}/>
         {this.renderQuestionList()}
         {this.renderQuestionDetail()}
         {this.renderNewQuestion()}
