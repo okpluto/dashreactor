@@ -30,20 +30,19 @@ class newQuestion extends Component {
 
 
   renderAnswers() {
-    const { answerInputStyle, fontAwesomeStyle } = styles;
+    const { answerInputStyle, fontAwesomeStyle, addNewChoiceSpanStyle } = styles;
+
       return (
         <div>
           <h2>Answers</h2>
-
           <input style={answerInputStyle} placeholder="Enter choice" />
-
-          <span style={{display:'block', color: lightGrey}} onClick={this.addChoice.bind(this)}>
+          <span style={addNewChoiceSpanStyle}>
 
             <i className="fa fa-plus-circle"
               aria-hidden="true"
               style={fontAwesomeStyle}>
             </i>
-            <p style={{display: "inline"}}>
+            <p style={{display: "inline"}} onClick={this.addChoice.bind(this)}>
               Add another choice
             </p>
           </span>
@@ -93,7 +92,6 @@ const styles = {
 
   answerInputStyle: {
     border: 'none',
-    // display: 'inline',
     color: '#7A7886'
   },
 
@@ -103,8 +101,10 @@ const styles = {
     opacity: 1,
     border: 0.2,
     textAlign: 'justified',
-    // outline: 'none',
-    // display: 'inline-block'
+  },
+  addNewChoiceSpanStyle: {
+    display:'block',
+    color: lightGrey
   },
 
   saveButtonStyle: {

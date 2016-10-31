@@ -4,7 +4,8 @@ import { Button, Col } from 'react-bootstrap';
 class QuestionDetail extends Component {
   constructor(props) {
     super(props)
-    //sets the state to an array of the questions answers
+
+    //saves array of the answers inherited through props, in order to be able to add more choices/inputs to it
     this.state = {
       inputs: this.props.question.choices
     }
@@ -34,7 +35,8 @@ class QuestionDetail extends Component {
                 </div>
               )
             })}
-          <i className="fa fa-plus-circle" aria-hidden="true" style={fontAwesomeStyle}></i><p onClick={this.addChoice.bind(this)} style={{display: "inline"}}> Add another choice</p>
+          <i className="fa fa-plus-circle" aria-hidden="true" style={fontAwesomeStyle}></i>
+          <p onClick={this.addChoice.bind(this)} style={{display: "inline"}}> Add another choice</p>
         </div>
       )
     }
@@ -50,7 +52,7 @@ class QuestionDetail extends Component {
   }
 
   render() {
-    const { QuestionDetailStyle, editableTextStyle, saveButtonStyle } = styles;
+    const { QuestionDetailStyle, saveButtonStyle } = styles;
     return (
       <Col sm={5} smOffset={7} style={QuestionDetailStyle}>
         <i style={{color: lightGrey}}>Click elements to edit</i>
@@ -97,7 +99,6 @@ const styles = {
     opacity: 1,
     border: 0.2,
     textAlign: 'justified',
-    // outline: 'none',
     display: 'inline-block'
   },
 

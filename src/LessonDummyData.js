@@ -69,7 +69,7 @@ const lessonDummyData = [
   "lessonContent": [
     {
       "_id": "",
-      "text": "_________('HIIIIIIII world!')",
+      "text": "_________('HI world!')",
       "answer": "console.log",
       "lessonId": "",
       "__v": 0,
@@ -81,7 +81,7 @@ const lessonDummyData = [
     },
       {
       "_id": "",
-      "text": "_________('HIIIIIIII world!')",
+      "text": "_________('HEYY world!')",
       "answer": "console.log",
       "lessonId": "",
       "__v": 0,

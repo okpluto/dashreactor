@@ -20,6 +20,8 @@ class Navbar extends Component {
         <img alt="dashReactorLogo" src={require('../public/dashReactorLogo.png')} style={{marginLeft: 10, marginTop: -90}}/>
         <i className="fa fa-book fa-2x" aria-hidden="true" style={{...menuItemStyle, ...selectedStyle}}></i>
         <br />
+
+      {/*this 'users' option is not currently implemented - app is hard coded to open up lessons only.*/}
         <i className="fa fa-user fa-2x" aria-hidden="true" style={menuItemStyle}></i>
       </Col>
     );
