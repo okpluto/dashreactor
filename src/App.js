@@ -16,6 +16,8 @@ class App extends Component {
       selectedLessonQuestions: null,
       selectedLessonTitle: null,
       selectedQuestion: null,
+
+      //determines whether 'NewQuestion' is visible.
       creatingQuestion: false,
     }
   }
@@ -42,12 +44,12 @@ class App extends Component {
     }
   }
 
-//enables appearance of question-creation form
+//enables appearance of question-creation form (NewQuestion.js)
   handleAddQuestionClick (lesson) {
     this.setState({creatingQuestion: true});
   }
 
-//at the moment this just clears the question creation form.
+//at the moment this just clears the NewQuestion form without saving.
   handleSaveNewQuestionClick () {
     this.setState({creatingQuestion: false});
   }
@@ -73,7 +75,7 @@ class App extends Component {
     }
   }
 
-//this is the component that displays the text and choices of currently selected question - can add choices but currently does not save. Also, does not currently display WHICH choice is the correct answer.
+//this is the component that displays the text and choices of currently selected question - can add choices but currently does not save. Also will need to be tweaked to display which choice is the correct answer.
   renderQuestionDetail () {
     if (this.state.selectedQuestion) {
       return (
