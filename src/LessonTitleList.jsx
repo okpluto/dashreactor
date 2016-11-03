@@ -11,20 +11,19 @@ class LessonTitleList extends Component {
     this.state = {
       lessons: LessonDummyData,
     }
-    this.getLessonTitles();
+    this.getLesson('581ba2a60d310220cc6667a8');
   }
 
-//not actually using live data yet
-  getLessonTitles() {
-    let url = `http://${localIp}:3011/api/lessons`;
+  getLesson(lessonID) {
+    let url = `http://${localIp}:3011/api/lessons/${lessonID}`;
 
     fetch(url)
     .then(data => {
       return data.json()
     })
     .then(data => {
-      console.log('DATA =>', data)
-      this.setState({lessons: data});
+      console.log('LESSON =>', data)
+      this.setState({lessons: [data]});
     })
   }
 
@@ -35,14 +34,13 @@ class LessonTitleList extends Component {
       <Col sm={3} style={LessonTitleListStyle}>
         {
           this.state.lessons.map(lesson => {
-            let isSelectedLesson = lesson.title === this.props.selectedLessonTitle
-
+            let isSelectedLesson = lesson.lessonInfo.title === this.props.selectedLessonTitle
             return (
               <LessonTitle
                 isSelectedLesson={isSelectedLesson}
                 handleLessonClick={this.props.handleLessonClick.bind(this)}
-                title={lesson.title}
-                // lessonContent={lesson.lessonContent}
+                title={lesson.lessonInfo.title}
+                lessonContent={lesson.lessonContent}
               />
             )
           })
