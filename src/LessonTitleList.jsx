@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import LessonTitle from './LessonTitle';
 import { Col } from 'react-bootstrap';
-import { localIp } from '../config/ip.js';
 import LessonDummyData from './LessonDummyData';
 
 
@@ -15,7 +14,7 @@ class LessonTitleList extends Component {
   }
 
   getLesson(lessonID) {
-    let url = `http://${localIp}:3011/api/lessons/${lessonID}`;
+    let url = `http://localhost:3011/api/lessons/${lessonID}`;
 
     fetch(url)
     .then(data => {
