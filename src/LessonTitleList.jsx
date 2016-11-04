@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import LessonTitle from './LessonTitle';
 import { Col } from 'react-bootstrap';
-
 import LessonDummyData from './LessonDummyData';
 
 
@@ -11,19 +10,19 @@ class LessonTitleList extends Component {
     this.state = {
       lessons: LessonDummyData,
     }
-    this.getLessonTitles();
+    this.getLesson('581ba2a60d310220cc6667a8');
   }
 
-//not actually using live data yet
-  getLessonTitles() {
-    let url = 'http://127.0.0.1:3011/api/lessons';
+  getLesson(lessonID) {
+    let url = `http://localhost:3011/api/lessons/${lessonID}`;
 
     fetch(url)
     .then(data => {
       return data.json()
     })
     .then(data => {
-      console.log('DATA =>', data)
+      console.log('LESSON =>', data)
+      this.setState({lessons: [data]});
     })
   }
 
@@ -35,7 +34,6 @@ class LessonTitleList extends Component {
         {
           this.state.lessons.map(lesson => {
             let isSelectedLesson = lesson.lessonInfo.title === this.props.selectedLessonTitle
-
             return (
               <LessonTitle
                 isSelectedLesson={isSelectedLesson}
