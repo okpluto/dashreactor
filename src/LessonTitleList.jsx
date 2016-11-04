@@ -2,28 +2,29 @@ import React, { Component } from 'react';
 import LessonTitle from './LessonTitle';
 import { Col } from 'react-bootstrap';
 import LessonDummyData from './LessonDummyData';
-
+import { getLessons, getLessonById } from '../services/LessonServices.js';
 
 class LessonTitleList extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      lessons: LessonDummyData,
+      lessons: []
     }
-    this.getLesson('581ba2a60d310220cc6667a8');
   }
 
-  getLesson(lessonID) {
-    let url = `http://localhost:3011/api/lessons/${lessonID}`;
-
-    fetch(url)
-    .then(data => {
-      return data.json()
-    })
-    .then(data => {
-      console.log('LESSON =>', data)
-      this.setState({lessons: [data]});
-    })
+  componentDidMount() {
+    var self = this;
+    getLessons()
+    .then(lessons => {
+      lessons.map(lesson => {
+        getLessonById(lesson._id)
+        .then(data => {
+          let lessons = this.state.lessons;
+          lessons.push(data);
+          this.setState({lessons: lessons});
+        });
+      });
+    });
   }
 
   render () {
