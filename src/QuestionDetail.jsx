@@ -21,7 +21,7 @@ class QuestionDetail extends Component {
     this.setEditBoxHeight = this.setEditBoxHeight.bind(this)
     this.setAnswer = this.setAnswer.bind(this)
     this.saveUpdates = this.saveUpdates.bind(this)
-    this.getAnswerCheckStyle = this.getAnswerCheckStyle.bind(this)
+    this.getAnswerCheckStyleColor = this.getAnswerCheckColor.bind(this)
     this.handleChange = this.handleChange.bind(this)
   }
 
@@ -52,7 +52,7 @@ class QuestionDetail extends Component {
   }
 
   renderQuestion() {
-    const { QuestionDetailStyle, editableTextStyle, nameInputStyle } = styles;
+    const { editableTextStyle, nameInputStyle } = styles;
     return (
       <div>
         <div>
@@ -89,15 +89,13 @@ class QuestionDetail extends Component {
     this.setState(newState);
   }
 
-  getAnswerCheckStyle(style, index) {
-    let styleCopy = {}
-    for (var key in style) {
-      styleCopy[key] = style[key]
-    }
+  getAnswerCheckColor(index) {
     if (this.state.answerIndex === index) {
-      styleCopy.color = '#2CCC5A';
+      // green
+      return '#2CCC5A';
     }
-    return styleCopy
+    // light grey
+    return '#A3A8AB'
   }
 
   setAnswer(index) {
@@ -109,12 +107,12 @@ class QuestionDetail extends Component {
 
   renderAnswers() {
     if (this.state.type === "question") {
-      const { answerInputStyle, fontAwesomeStyle } = styles;
+      const { fontAwesomeStyle } = styles;
         return (
           <div>
             <h2>Answers</h2>
             {this.state.choices.map((choice, index) =>
-              <Answer choice={choice} key={index} index={index} change={this.handleChange} getAnswerCheckStyle={this.getAnswerCheckStyle} setAnswer={this.setAnswer}/>
+              <Answer choice={choice} key={index} index={index} change={this.handleChange} color={this.getAnswerCheckColor(index)} setAnswer={this.setAnswer}/>
             )}
             <i className="fa fa-plus-circle" aria-hidden="true" style={fontAwesomeStyle} onClick={this.addChoice}></i>
             <p onClick={this.addChoice} style={{display: "inline"}}> Add another choice</p>
@@ -173,7 +171,7 @@ const styles = {
     position: 'fixed',
     paddingTop: 90,
     width: '100%',
-    height: 40,
+    //height: 40,
     textWrap: true,
     paddingRight: 0,
     paddingLeft:40,
