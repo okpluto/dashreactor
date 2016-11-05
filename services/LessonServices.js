@@ -1,11 +1,14 @@
 var Promise = require('bluebird');
 
 
-const getLessons = function () {
+const getLessons = function (jwt) {
   return new Promise((resolve, reject) => {
     $.ajax({
       url: 'http://localhost:3011/api/lessons/',
       type: 'GET',
+      headers: {
+        'authorization': jwt
+      },
       success: resolve,
       error: reject
     });
@@ -28,7 +31,6 @@ const addLesson = function (lesson) {
     $.ajax({
       url: 'http://localhost:3011/api/lessons/',
       type: 'POST',
-      data: lesson,
       success: resolve,
       error: reject
     });
@@ -40,7 +42,6 @@ const updateLesson = function (lesson) {
     $.ajax({
       url: 'http://localhost:3011/api/lessons/',
       type: 'PUT',
-      data: lesson,
       success: resolve,
       error: reject
     });
@@ -49,6 +50,5 @@ const updateLesson = function (lesson) {
 
 module.exports = {
   getLessons: getLessons,
-  getLessonById: getLessonById,
-  addLesson: addLesson
+  getLessonById: getLessonById
 };

@@ -1,28 +1,29 @@
 import React, { Component } from 'react'
-import { Button, Col } from 'react-bootstrap'
 
-const lightGrey = '#A3A8AB'
-
-const styles = {
-
-  fontAwesomeStyle: {
-    color: lightGrey,
-    display: 'inline',
-    paddingRight: 3,
-  },
-
-  answerInputStyle: {
-    border: 'none',
-    display: 'inline',
-    color: '#7A7886'
-  },
+const fontAwesomeStyle = {
+  display: 'inline',
+  paddingRight: 3,
 }
 
-const { answerInputStyle, fontAwesomeStyle } = styles;
+const  answerInputStyle = {
+  border: 'none',
+  display: 'inline',
+  color: '#7A7886'
+}
+
 class Answer extends Component {
   constructor(props) {
     super(props)
     this.handleChange = this.handleChange.bind(this)
+  }
+
+  setCheckColor() {
+    let styleCopy = {}
+    for (var key in fontAwesomeStyle) {
+      styleCopy[key] = fontAwesomeStyle[key]
+    }
+    styleCopy.color = this.props.color
+    return styleCopy
   }
 
   handleChange(event) {
@@ -41,7 +42,7 @@ class Answer extends Component {
               onChange={this.handleChange}/>
               <i className="fa fa-check-circle"
                 aria-hidden="true"
-                style={this.props.getAnswerCheckStyle(fontAwesomeStyle, this.props.index)}
+                style={this.setCheckColor()}
                 onClick={() => this.props.setAnswer(this.props.index)}></i>
           </div>
 

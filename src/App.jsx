@@ -5,7 +5,11 @@ import QuestionTitleList from './QuestionTitleList';
 import QuestionDetail from './QuestionDetail';
 import NewQuestion from './NewQuestion';
 import NewLesson from './NewLesson';
+import Signin from './Signin'
 import { Row } from 'react-bootstrap';
+import { getLessons, getLessonById } from '../services/LessonServices.js';
+import { getUser } from '../services/userServices.js'
+
 
 class App extends Component {
   constructor() {
@@ -19,7 +23,28 @@ class App extends Component {
 
       //determines whether 'NewQuestion' is visible.
       creatingQuestion: false,
-      creatingLesson: false
+      creatingLesson: false,
+
+      //pulled from DB on authentication
+      loggedIn: false,
+      userLessons: null
+    }
+    this.checkLogin = this.checkLogin.bind(this)
+    this.checkLogin()
+  }
+
+  checkLogin() {
+    let self = this
+    if (localStorage.getItem('userAuth')) {
+      const auth = JSON.parse(localStorage.getItem('userAuth'));
+      getUser(auth)
+      .then(lessons => {
+        self.setState({loggedIn: true, userLessons: lessons.createdLessons})
+      })
+    } else {
+      if (self.state.loggedIn) {
+        self.setState({loggedIn: false})
+      }
     }
   }
 
@@ -87,7 +112,7 @@ class App extends Component {
 
   renderNewLesson(){
     if (this.state.creatingLesson) {
-      return <NewLesson handleSaveNewLessonClick={this.handleSaveNewLessonClick.bind(this)}/>
+      return <NewLesson handleSaveNewLessonClick={this.handleSaveNewQuestionClick.bind(this)}/>
     }
   }
 
@@ -123,18 +148,27 @@ class App extends Component {
 
 
   render() {
-    return (
-      <Row className="App">
-        <Navbar />
-        <div className="container-fluid">
-        <LessonTitleList lessons={this.state.lessons} selectedLessonTitle={this.state.selectedLessonTitle} handleLessonClick={this.handleLessonClick.bind(this)} handleAddLessonClick={this.handleAddLessonClick.bind(this)}/>
-        {this.renderNewLesson()}
-        {this.renderQuestionList()}
-        {this.renderQuestionDetail()}
-        {this.renderNewQuestion()}
-        </div>
-      </Row>
-    );
+    if (this.state.loggedIn) {
+      return (
+        <Row className="App">
+          <Navbar display={'lessons'} checkLogin={this.checkLogin}/>
+          <div className="container-fluid">
+          <LessonTitleList userLessons={this.state.userLessons} selectedLessonTitle={this.state.selectedLessonTitle} handleLessonClick={this.handleLessonClick.bind(this)} handleAddLessonClick={this.handleAddLessonClick.bind(this)}/>
+          {this.renderNewLesson()}
+          {this.renderQuestionList()}
+          {this.renderQuestionDetail()}
+          {this.renderNewQuestion()}
+          </div>
+        </Row>
+      );
+    } else {
+      return (
+        <Row className="App">
+          <Navbar display={'user'} />
+          <Signin checkLogin={this.checkLogin}/>
+        </Row>
+      )
+    }
   }
 }
 

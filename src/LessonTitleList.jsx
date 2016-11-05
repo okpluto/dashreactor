@@ -15,17 +15,14 @@ class LessonTitleList extends Component {
 
   componentDidMount() {
     var self = this;
-    getLessons()
-    .then(lessons => {
-      lessons.map(lesson => {
-        getLessonById(lesson._id)
-        .then(data => {
-          let lessons = this.state.lessons;
-          lessons.push(data);
-          this.setState({lessons: lessons});
-        });
+    this.props.userLessons.forEach(lesson => {
+      getLessonById(lesson)
+      .then(data => {
+        let lessons = this.state.lessons;
+        lessons.push(data);
+        this.setState({lessons: lessons});
       });
-    });
+    })
   }
 
   render () {

@@ -1,33 +1,33 @@
 import React, { Component } from 'react';
 import { Button, Col, FormControl } from 'react-bootstrap';
-import { addLesson } from '../services/LessonServices.js';
 
 class newLesson extends Component {
   constructor (props) {
     super(props)
     this.state = {
+<<<<<<< 8c6982c11faf8b936b0196ff6290df3856a3ddab
       lesson: {
-        title: '',
+        tite: '',
         description: '',
-        difficultyRating: 1,
-        category: 'functions'
+        difficultyRating: '',
+        category: ''
       }
     };
   }
 
-  handleChange(prop, event) {
+  handleChange(props, event) {
+    debugger;
     let change = this.state.lesson;
-    change[prop] = event.target.value;
+    if (props === 'difficultyRating' || props === 'category') {
+      change[props] = event.target
+    } else {
+      change[props] = event.target.value;
+    }
     this.setState(change);
     console.log(this.state.lesson);
-  }
-
-  addLesson() {
-    addLesson(this.state.lesson)
-    .then(id => {
-      console.log('success')
-    })
-    //this.props.handleSaveNewLessonClick(this.state.lesson)
+=======
+    }
+>>>>>>> Add lesson
   }
 
   renderTitle() {
@@ -35,7 +35,7 @@ class newLesson extends Component {
     return (
       <div>
         <h3>Title</h3>
-        <input style={editableTextStyle} placeholder="title" onChange={this.handleChange.bind(this, 'title')} />
+        <input style={editableTextStyle} placeholder="title" />
       </div>
     )
   }
@@ -45,7 +45,7 @@ class newLesson extends Component {
     return (
       <div>
         <h3>Description</h3>
-        <input style={editableTextStyle} placeholder="description" onChange={this.handleChange.bind(this, 'description')}/>
+        <input style={editableTextStyle} placeholder="description" />
       </div>
     )
   }
@@ -55,12 +55,19 @@ class newLesson extends Component {
     return (
       <div>
         <h3>Difficulty Rating</h3>
+<<<<<<< 8c6982c11faf8b936b0196ff6290df3856a3ddab
         <FormControl componentClass="select" onChange={this.handleChange.bind(this, 'difficultyRating')}>
-          <option value="1">1</option>
+          <option value="1" selected>1</option>
           <option value="2">2</option>
           <option value="3">3</option>
           <option value="4">4</option>
           <option value="5">5</option>
+=======
+        <FormControl componentClass="select">
+          <option value="easy" selected>Easy</option>
+          <option value="medium">Medium</option>
+          <option value="hard">Hard</option>
+>>>>>>> Add lesson
         </FormControl>
       </div>
     )
@@ -71,14 +78,21 @@ class newLesson extends Component {
     return (
       <div>
         <h3>Category</h3>
+<<<<<<< 8c6982c11faf8b936b0196ff6290df3856a3ddab
         <FormControl componentClass="select" onChange={this.handleChange.bind(this, 'category')}>
-          <option value="functions">Functions</option>
+          <option value="functions" selected>Functions</option>
           <option value="objects">Objects</option>
           <option value="arrays">Arrays</option>
           <option value="es6">es6</option>
           <option value="loop">Loop</option>
           <option value="variables">Working with variables</option>
           <option value="syntax">Syntax</option>
+=======
+        <FormControl componentClass="select" >
+          <option value="?" selected>?</option>
+          <option value="?">?</option>
+          <option value="?">?</option>
+>>>>>>> Add lesson
         </FormControl>
       </div>
     )
@@ -92,7 +106,11 @@ class newLesson extends Component {
         {this.renderDescription()}
         {this.renderDifficultyRating()}
         {this.renderCatogory()}
-        <Button style={saveButtonStyle} onClick={this.addLesson.bind(this)} >Save</Button>
+<<<<<<< 8c6982c11faf8b936b0196ff6290df3856a3ddab
+        <Button style={saveButtonStyle} onClick={this.props.handleSaveNewLessonClick.bind(this, this.state.lesson)}>Save</Button>
+=======
+        <Button style={saveButtonStyle} onClick={this.props.handleSaveNewLessonClick.bind(this)}>Save</Button>
+>>>>>>> Add lesson
 
       </Col>
     )

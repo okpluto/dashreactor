@@ -25,6 +25,7 @@ const styles = {
   defaultStyle: {
     width: '100%',
     backgroundColor: 'white',
+    height: 60,
     paddingLeft: 10,
     fontFamily: 'Lato',
     cursor: 'pointer',
@@ -34,7 +35,6 @@ const styles = {
     color: 'white',
     backgroundColor: coral,
     opacity: 1,
-    cursor: 'pointer',
   }
 }
 
