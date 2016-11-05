@@ -5,7 +5,6 @@ class newLesson extends Component {
   constructor (props) {
     super(props)
     this.state = {
-<<<<<<< 8c6982c11faf8b936b0196ff6290df3856a3ddab
       lesson: {
         tite: '',
         description: '',
@@ -16,18 +15,12 @@ class newLesson extends Component {
   }
 
   handleChange(props, event) {
-    debugger;
     let change = this.state.lesson;
-    if (props === 'difficultyRating' || props === 'category') {
-      change[props] = event.target
-    } else {
-      change[props] = event.target.value;
-    }
+
+    change[props] = event.target.value;
+
     this.setState(change);
     console.log(this.state.lesson);
-=======
-    }
->>>>>>> Add lesson
   }
 
   renderTitle() {
@@ -55,19 +48,12 @@ class newLesson extends Component {
     return (
       <div>
         <h3>Difficulty Rating</h3>
-<<<<<<< 8c6982c11faf8b936b0196ff6290df3856a3ddab
         <FormControl componentClass="select" onChange={this.handleChange.bind(this, 'difficultyRating')}>
           <option value="1" selected>1</option>
           <option value="2">2</option>
           <option value="3">3</option>
           <option value="4">4</option>
           <option value="5">5</option>
-=======
-        <FormControl componentClass="select">
-          <option value="easy" selected>Easy</option>
-          <option value="medium">Medium</option>
-          <option value="hard">Hard</option>
->>>>>>> Add lesson
         </FormControl>
       </div>
     )
@@ -78,7 +64,7 @@ class newLesson extends Component {
     return (
       <div>
         <h3>Category</h3>
-<<<<<<< 8c6982c11faf8b936b0196ff6290df3856a3ddab
+
         <FormControl componentClass="select" onChange={this.handleChange.bind(this, 'category')}>
           <option value="functions" selected>Functions</option>
           <option value="objects">Objects</option>
@@ -87,12 +73,6 @@ class newLesson extends Component {
           <option value="loop">Loop</option>
           <option value="variables">Working with variables</option>
           <option value="syntax">Syntax</option>
-=======
-        <FormControl componentClass="select" >
-          <option value="?" selected>?</option>
-          <option value="?">?</option>
-          <option value="?">?</option>
->>>>>>> Add lesson
         </FormControl>
       </div>
     )
@@ -106,11 +86,7 @@ class newLesson extends Component {
         {this.renderDescription()}
         {this.renderDifficultyRating()}
         {this.renderCatogory()}
-<<<<<<< 8c6982c11faf8b936b0196ff6290df3856a3ddab
-        <Button style={saveButtonStyle} onClick={this.props.handleSaveNewLessonClick.bind(this, this.state.lesson)}>Save</Button>
-=======
         <Button style={saveButtonStyle} onClick={this.props.handleSaveNewLessonClick.bind(this)}>Save</Button>
->>>>>>> Add lesson
 
       </Col>
     )
