@@ -23,7 +23,19 @@ const getLessonById = function (lessonId) {
   });
 };
 
+const addLesson = function (lesson) {
+  return new Promise((resolve, reject) => {
+    $.ajax({
+      url: 'http://localhost:3011/api/lessons/',
+      type: 'POST',
+      success: resolve,
+      error: reject
+    });
+  })
+}
+
 module.exports = {
   getLessons: getLessons,
-  getLessonById: getLessonById
+  getLessonById: getLessonById,
+  addLesson: addLesson
 };

@@ -17,7 +17,8 @@ class LessonTitle extends Component {
 
     return (
       <div style={titleStyle} onClick={this.props.handleLessonClick.bind(this, this.props)}>
-        <p>{this.props.title}</p>
+        <p >{this.props.title}</p>
+
       </div>
     );
   }
@@ -36,7 +37,6 @@ const coral = '#FA848A'
 const styles = {
   defaultStyle: {
     backgroundColor: 'white',
-    display: 'block',
     height: 60,
     width: '100%',
     paddingLeft: 10,
