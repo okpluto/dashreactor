@@ -30,7 +30,9 @@ class App extends Component {
       this.setState({
         selectedLesson: null,
         selectedLessonTitle: null,
-        creatingLesson:false
+        creatingLesson:false,
+        selectedQuestion: null,
+        selectedLessonQuestions: null,
       })
     } else {
       this.setState({
@@ -52,7 +54,6 @@ class App extends Component {
   }
 
   handleQuestionClick (question) {
-    debugger;
     if (this.state.selectedQuestion === question) {
       this.setState({
         selectedQuestion: null,
@@ -140,4 +141,3 @@ class App extends Component {
 }
 
 export default App;
-
