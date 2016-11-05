@@ -8,7 +8,8 @@ class LessonTitleList extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      lessons: []
+      lessons: [],
+      show: false
     }
   }
 
@@ -28,10 +29,11 @@ class LessonTitleList extends Component {
   }
 
   render () {
-    const { LessonTitleListStyle } = styles;
+    const { LessonTitleListStyle, fontAwesomeStyle } = styles;
 
     return (
       <Col sm={3} style={LessonTitleListStyle}>
+       <i onClick={this.props.handleAddLessonClick} className="fa fa-plus-circle" aria-hidden="true" style={fontAwesomeStyle} ></i>
         {
           this.state.lessons.map(lesson => {
             let isSelectedLesson = lesson.lessonInfo.title === this.props.selectedLessonTitle
@@ -56,13 +58,21 @@ const styles = {
     fontSize: 20,
     backgroundColor: 'white',
     position: 'fixed',
-    paddingTop: 100,
+    paddingTop: 60,
     paddingRight: 0,
     paddingLeft:0,
     marginLeft: 100,
     fontFamily: 'Lato',
     zIndex: 0,
     boxShadow: '0px 0px 5px -1px rgba(0,0,0,0.2)',
+    overflow:'scroll'
+  },
+  fontAwesomeStyle: {
+    color: '#DADCDD',
+    display: 'inline',
+    marginLeft: 10,
+    fontSize: 40,
+    cursor: 'pointer'
   },
 }
 

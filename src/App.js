@@ -4,7 +4,8 @@ import LessonTitleList from './LessonTitleList';
 import QuestionTitleList from './QuestionTitleList';
 import QuestionDetail from './QuestionDetail';
 import NewQuestion from './NewQuestion';
-import { Button, Col, Row } from 'react-bootstrap';
+import NewLesson from './NewLesson';
+import { Row } from 'react-bootstrap';
 
 
 class App extends Component {
@@ -19,34 +20,59 @@ class App extends Component {
 
       //determines whether 'NewQuestion' is visible.
       creatingQuestion: false,
+      creatingLesson: false
     }
   }
 
 
   handleLessonClick (lesson) {
+    if (this.state.selectedLesson && this.state.selectedLesson.title === lesson.title) {
+      this.setState({
+        selectedLesson: null,
+        selectedLessonTitle: null,
+        creatingLesson:false
+      })
+    } else {
+      this.setState({
+        selectedLesson: lesson,
+        selectedLessonQuestions: lesson.lessonContent,
+        selectedLessonTitle: lesson.title,
+        creatingLesson: false
+      });
+    }
+
+  }
+
+  handleAddLessonClick (lesson) {
     this.setState({
-      selectedLesson: lesson,
-      selectedLessonQuestions: lesson.lessonContent,
-      selectedLessonTitle: lesson.title
+      creatingLesson: true,
+      selectedLesson: null,
+      selectedLessonTitle: null
     });
   }
 
-
   handleQuestionClick (question) {
-    if (!this.state.selectedQuestion) {
+    debugger;
+    if (this.state.selectedQuestion === question) {
       this.setState({
-        selectedQuestion: question
-      });
+        selectedQuestion: null,
+        creatingQuestion: false
+      })
     } else {
       this.setState({
-        selectedQuestion: null
+        selectedQuestion: question,
+        creatingQuestion: false
       })
     }
+
   }
 
 //enables appearance of question-creation form (NewQuestion.js)
-  handleAddQuestionClick (lesson) {
-    this.setState({creatingQuestion: true});
+  handleAddQuestionClick (question) {
+    this.setState({
+      creatingQuestion: true,
+      selectedQuestion: null
+    });
   }
 
 //at the moment this just clears the NewQuestion form without saving.
@@ -60,6 +86,15 @@ class App extends Component {
     }
   }
 
+  renderNewLesson(){
+    if (this.state.creatingLesson) {
+      return <NewLesson handleSaveNewLessonClick={this.handleSaveNewQuestionClick.bind(this)}/>
+    }
+  }
+
+  handleSaveNewLessonClick () {
+    this.setState({creatingLesson: false});
+  }
 
   renderQuestionList () {
     if (this.state.selectedLesson) {
@@ -93,7 +128,8 @@ class App extends Component {
       <Row className="App">
         <Navbar />
         <div className="container-fluid">
-        <LessonTitleList selectedLessonTitle={this.state.selectedLessonTitle} handleLessonClick={this.handleLessonClick.bind(this)}/>
+        <LessonTitleList selectedLessonTitle={this.state.selectedLessonTitle} handleLessonClick={this.handleLessonClick.bind(this)} handleAddLessonClick={this.handleAddLessonClick.bind(this)}/>
+        {this.renderNewLesson()}
         {this.renderQuestionList()}
         {this.renderQuestionDetail()}
         {this.renderNewQuestion()}
@@ -104,3 +140,4 @@ class App extends Component {
 }
 
 export default App;
+
