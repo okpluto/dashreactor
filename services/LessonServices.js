@@ -1,11 +1,14 @@
 var Promise = require('bluebird');
 
 
-const getLessons = function () {
+const getLessons = function (jwt) {
   return new Promise((resolve, reject) => {
     $.ajax({
       url: 'http://localhost:3011/api/lessons/',
       type: 'GET',
+      headers: {
+        'authorization': jwt
+      },
       success: resolve,
       error: reject
     });
