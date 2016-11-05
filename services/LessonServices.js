@@ -28,6 +28,19 @@ const addLesson = function (lesson) {
     $.ajax({
       url: 'http://localhost:3011/api/lessons/',
       type: 'POST',
+      data: lesson,
+      success: resolve,
+      error: reject
+    });
+  })
+}
+
+const updateLesson = function (lesson) {
+  return new Promise((resolve, reject) => {
+    $.ajax({
+      url: 'http://localhost:3011/api/lessons/',
+      type: 'PUT',
+      data: lesson,
       success: resolve,
       error: reject
     });

@@ -7,7 +7,6 @@ import NewQuestion from './NewQuestion';
 import NewLesson from './NewLesson';
 import { Row } from 'react-bootstrap';
 
-
 class App extends Component {
   constructor() {
     super();
@@ -23,7 +22,6 @@ class App extends Component {
       creatingLesson: false
     }
   }
-
 
   handleLessonClick (lesson) {
     if (this.state.selectedLesson && this.state.selectedLesson.title === lesson.title) {
@@ -89,7 +87,7 @@ class App extends Component {
 
   renderNewLesson(){
     if (this.state.creatingLesson) {
-      return <NewLesson handleSaveNewLessonClick={this.handleSaveNewQuestionClick.bind(this)}/>
+      return <NewLesson handleSaveNewLessonClick={this.handleSaveNewLessonClick.bind(this)}/>
     }
   }
 
@@ -129,7 +127,7 @@ class App extends Component {
       <Row className="App">
         <Navbar />
         <div className="container-fluid">
-        <LessonTitleList selectedLessonTitle={this.state.selectedLessonTitle} handleLessonClick={this.handleLessonClick.bind(this)} handleAddLessonClick={this.handleAddLessonClick.bind(this)}/>
+        <LessonTitleList lessons={this.state.lessons} selectedLessonTitle={this.state.selectedLessonTitle} handleLessonClick={this.handleLessonClick.bind(this)} handleAddLessonClick={this.handleAddLessonClick.bind(this)}/>
         {this.renderNewLesson()}
         {this.renderQuestionList()}
         {this.renderQuestionDetail()}

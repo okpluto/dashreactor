@@ -7,24 +7,27 @@ class newLesson extends Component {
     super(props)
     this.state = {
       lesson: {
-        tite: '',
+        title: '',
         description: '',
-        difficultyRating: '',
-        category: ''
+        difficultyRating: 1,
+        category: 'functions'
       }
     };
   }
 
-  handleChange(props, event) {
-    debugger;
+  handleChange(prop, event) {
     let change = this.state.lesson;
-    if (props === 'difficultyRating' || props === 'category') {
-      change[props] = event.target
-    } else {
-      change[props] = event.target.value;
-    }
+    change[prop] = event.target.value;
     this.setState(change);
     console.log(this.state.lesson);
+  }
+
+  addLesson() {
+    addLesson(this.state.lesson)
+    .then(id => {
+      console.log('success')
+    })
+    //this.props.handleSaveNewLessonClick(this.state.lesson)
   }
 
   renderTitle() {
@@ -53,7 +56,7 @@ class newLesson extends Component {
       <div>
         <h3>Difficulty Rating</h3>
         <FormControl componentClass="select" onChange={this.handleChange.bind(this, 'difficultyRating')}>
-          <option value="1" selected>1</option>
+          <option value="1">1</option>
           <option value="2">2</option>
           <option value="3">3</option>
           <option value="4">4</option>
@@ -69,7 +72,7 @@ class newLesson extends Component {
       <div>
         <h3>Category</h3>
         <FormControl componentClass="select" onChange={this.handleChange.bind(this, 'category')}>
-          <option value="functions" selected>Functions</option>
+          <option value="functions">Functions</option>
           <option value="objects">Objects</option>
           <option value="arrays">Arrays</option>
           <option value="es6">es6</option>
@@ -89,7 +92,7 @@ class newLesson extends Component {
         {this.renderDescription()}
         {this.renderDifficultyRating()}
         {this.renderCatogory()}
-        <Button style={saveButtonStyle} onClick={this.props.handleSaveNewLessonClick.bind(this, this.state.lesson)}>Save</Button>
+        <Button style={saveButtonStyle} onClick={this.addLesson.bind(this)} >Save</Button>
 
       </Col>
     )
