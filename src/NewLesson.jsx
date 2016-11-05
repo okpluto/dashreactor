@@ -6,10 +6,10 @@ class newLesson extends Component {
     super(props)
     this.state = {
       lesson: {
-        tite: '',
+        title: '',
         description: '',
-        difficultyRating: '',
-        category: ''
+        difficultyRating: '1',
+        category: 'functions'
       }
     };
   }
@@ -28,7 +28,7 @@ class newLesson extends Component {
     return (
       <div>
         <h3>Title</h3>
-        <input style={editableTextStyle} placeholder="title" />
+        <input style={editableTextStyle} placeholder="title" onChange={this.handleChange.bind(this, 'title')}/>
       </div>
     )
   }
@@ -38,7 +38,7 @@ class newLesson extends Component {
     return (
       <div>
         <h3>Description</h3>
-        <input style={editableTextStyle} placeholder="description" />
+        <input style={editableTextStyle} placeholder="description" onChange={this.handleChange.bind(this, 'description')}/>
       </div>
     )
   }
