@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { Button, Col } from 'react-bootstrap'
+import Answer from './QuestionAnswers'
 
 class QuestionDetail extends Component {
   constructor(props) {
@@ -11,19 +12,33 @@ class QuestionDetail extends Component {
       text: this.props.question.text,
       choices: this.props.question.choices,
       answer: this.props.question.answer,
+      type: this.props.question.type,
       answerIndex: this.props.question.choices.indexOf(this.props.question.answer)
     }
     this.renderQuestion = this.renderQuestion.bind(this)
-    this.renderAnswers = this.renderAnswers.bind(this)
     this.addChoice = this.addChoice.bind(this)
     this.getSectionTitle = this.getSectionTitle.bind(this)
     this.setEditBoxHeight = this.setEditBoxHeight.bind(this)
     this.setAnswer = this.setAnswer.bind(this)
     this.saveUpdates = this.saveUpdates.bind(this)
+    this.getAnswerCheckStyle = this.getAnswerCheckStyle.bind(this)
+    this.handleChange = this.handleChange.bind(this)
+  }
+
+  componentWillReceiveProps(nextProps) {
+    this.setState({choices: []})
+    this.setState({
+      name: nextProps.question.name || '',
+      text: nextProps.question.text,
+      choices: nextProps.question.choices,
+      answer: nextProps.question.answer,
+      type: nextProps.question.type,
+      answerIndex: nextProps.question.choices.indexOf(nextProps.question.answer)
+    })
   }
 
   getSectionTitle() {
-    return this.props.question.type === "question" ? (<h2>Question</h2>) : (<h2>Reading</h2>)
+    return this.state.type === "question" ? (<h2>Question</h2>) : (<h2>Reading</h2>)
   }
 
   setEditBoxHeight(style) {
@@ -33,7 +48,6 @@ class QuestionDetail extends Component {
     }
     styleCopy.height = Math.max(80, Math.ceil(this.state.text.length / 40) * 48);
     if (styleCopy.height > 250) styleCopy.height = 250;
-    console.log(styleCopy.height)
     return styleCopy;
   }
 
@@ -43,16 +57,17 @@ class QuestionDetail extends Component {
       <div>
         <div>
           <h2>Name</h2>
-          <input
+          <textArea
             style={ nameInputStyle }
-            placeholder={(this.props.question.name || "...")}
+            value={this.state.name}
+            placeholder="..."
             onChange={this.handleChange.bind(this, 'name')}/>
         </div>
         <div>
           {this.getSectionTitle()}
           <textArea
             style={ this.setEditBoxHeight(editableTextStyle) }
-            defaultValue={this.props.question.text}
+            value={this.state.text}
             onChange={this.handleChange.bind(this, 'text')}/>
         </div>
       </div>
@@ -66,7 +81,7 @@ class QuestionDetail extends Component {
       let index, event;
       [index, event] = args;
       newState.choices = this.state.choices;
-      newState.choices[index] = event.target.value;
+      newState.choices[index] = event;
     } else {
       event = args[0];
       newState[stateKey] = event.target.value;
@@ -93,32 +108,18 @@ class QuestionDetail extends Component {
   }
 
   renderAnswers() {
-    if (this.props.question.type === "question") {
+    if (this.state.type === "question") {
       const { answerInputStyle, fontAwesomeStyle } = styles;
-      if (this.state.choices) {
         return (
           <div>
             <h2>Answers</h2>
-              {this.state.choices.map((choiceInput, index) => {
-                return (
-                  <div>
-                    <input
-                      style={answerInputStyle}
-                      placeholder="..."
-                      defaultValue={choiceInput}
-                      onChange={this.handleChange.bind(this, 'choices', index)}/>
-                      <i className="fa fa-check-circle"
-                        aria-hidden="true"
-                        style={this.getAnswerCheckStyle(fontAwesomeStyle, index)}
-                        onClick={() => this.setAnswer(index)}></i>
-                  </div>
-                )
-              })}
+            {this.state.choices.map((choice, index) =>
+              <Answer choice={choice} key={index} index={index} change={this.handleChange} getAnswerCheckStyle={this.getAnswerCheckStyle} setAnswer={this.setAnswer}/>
+            )}
             <i className="fa fa-plus-circle" aria-hidden="true" style={fontAwesomeStyle} onClick={this.addChoice}></i>
             <p onClick={this.addChoice} style={{display: "inline"}}> Add another choice</p>
           </div>
         )
-      }
     } else {
       return;
     }
@@ -135,13 +136,26 @@ class QuestionDetail extends Component {
 
   saveUpdates() {
     let url = `http://localhost:3011/api/content/${this.props.question._id}`
+    let data = this.state
+    data.choices = data.choices.filter(choice => choice !== '')
+    fetch(url, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+        Accept: 'application/json'
+      },
+      body: JSON.stringify(data)
+    })
+    .then(res => res.json())
+    .catch(err => {
+      console.log(err)
+    })
   }
 
   render() {
     const { QuestionDetailStyle, saveButtonStyle } = styles;
     return (
       <Col sm={5} smOffset={7} style={QuestionDetailStyle}>
-
         {this.renderQuestion()}
         {this.renderAnswers()}
         <Button style={saveButtonStyle} onClick={this.saveUpdates}>Save</Button>
@@ -173,12 +187,6 @@ const styles = {
     paddingRight: 3,
   },
 
-  answerInputStyle: {
-    border: 'none',
-    display: 'inline',
-    color: '#7A7886'
-  },
-
   editableTextStyle: {
     width: 300,
     padding: 10,
@@ -206,5 +214,3 @@ const styles = {
 }
 
 export default QuestionDetail;
-
-//<i style={{color: lightGrey}}>Click elements to edit</i>
