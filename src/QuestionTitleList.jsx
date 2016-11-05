@@ -18,6 +18,7 @@ class QuestionTitleList extends Component {
 
     return (
       <Col sm={3} smOffset={4} xs={3} xsOffset={5} style={questionListStyle} >
+        <i onClick={this.props.handleAddQuestionClick} className="fa fa-plus-circle" aria-hidden="true" style={fontAwesomeStyle} ></i>
         {
           this.props.lessonContent.map(question => {
             let isSelectedQuestion;
@@ -38,7 +39,7 @@ class QuestionTitleList extends Component {
             )
           })
         }
-        <i onClick={this.props.handleAddQuestionClick} className="fa fa-plus-circle" aria-hidden="true" style={fontAwesomeStyle} ></i>
+
       </Col>
     )
   }
@@ -55,20 +56,19 @@ const styles = {
     paddingRight: 0,
     paddingLeft: 0,
     paddingLeft: 0,
-    paddingTop: 100,
+    paddingTop: 60,
     marginTop: 0,
     fontFamily: 'Lato',
     zIndex: -1,
     fontSize: 18,
     boxShadow: '2px 0px 5px -1px rgba(0,0,0,0.2)',
+    overflow:'scroll'
   },
 
   fontAwesomeStyle: {
     color: '#DADCDD',
     display: 'inline',
     marginLeft: 10,
-    marginTop: 50,
-    // textAlign: 'left',
     fontSize: 40,
   },
 }
