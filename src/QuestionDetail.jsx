@@ -134,7 +134,7 @@ class QuestionDetail extends Component {
   }
 
   saveUpdates() {
-
+    let url = `http://localhost:3011/api/content/${this.props.question._id}`
   }
 
   render() {
