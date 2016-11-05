@@ -171,12 +171,12 @@ const styles = {
     position: 'fixed',
     paddingTop: 90,
     width: '100%',
-    //height: 40,
     textWrap: true,
     paddingRight: 0,
     paddingLeft:40,
     fontFamily: 'Lato',
     zIndex: -1,
+    overflow: 'scroll',
   },
 
   fontAwesomeStyle: {
