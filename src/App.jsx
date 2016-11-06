@@ -183,7 +183,8 @@ class App extends Component {
       window.alert('We have published the lesson')
     })
     .catch(() => {
-      window.alert('You need to have at least 5 questions to publish a lesson')
+      window.alert('You need to have at least 5 questions to publish a lesson');
+      lesson.lessonInfo.published = false;
     })
   }
 
