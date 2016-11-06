@@ -5,9 +5,10 @@ import QuestionTitleList from './QuestionTitleList';
 import QuestionDetail from './QuestionDetail';
 import NewQuestion from './NewQuestion';
 import NewLesson from './NewLesson';
+import EditLesson from './EditLesson';
 import Signin from './Signin'
 import { Row } from 'react-bootstrap';
-import { getLessons, getLessonById } from '../services/LessonServices.js';
+import { getLessons, getLessonById, addLesson, updateLesson} from '../services/LessonServices.js';
 import { getUser } from '../services/userServices.js'
 
 
@@ -20,17 +21,19 @@ class App extends Component {
       selectedLessonQuestions: null,
       selectedLessonTitle: null,
       selectedQuestion: null,
-
-      //determines whether 'NewQuestion' is visible.
+      lessonToEdit: null,
+      //determines whether 'NewQuestion & NewLesson' is visible.
       creatingQuestion: false,
       creatingLesson: false,
-
       //pulled from DB on authentication
       loggedIn: false,
-      userLessons: null
+      userLessons: [],
+      //TESTING, REMOVE FOLLOWING LINE LATER
+      lessons: []
     }
     this.checkLogin = this.checkLogin.bind(this)
-    this.checkLogin()
+    //TESTING, REMOVE COMMENT LATER
+    //this.checkLogin()
   }
 
   checkLogin() {
@@ -48,6 +51,24 @@ class App extends Component {
     }
   }
 
+  // TESTING, REMOVE LATER
+  componentDidMount() {
+    var self = this;
+    getLessons()
+    .then(lessons => {
+      lessons.map(lesson => {
+        getLessonById(lesson._id)
+        .then(data => {
+          let lessons = self.state.lessons;
+          lessons.push(data);
+          self.setState({lessons: lessons});
+        });
+      });
+    });
+  }
+
+// ********* Lesson ********* //
+
   handleLessonClick (lesson) {
     if (this.state.selectedLesson && this.state.selectedLesson.title === lesson.title) {
       this.setState({
@@ -56,25 +77,108 @@ class App extends Component {
         creatingLesson:false,
         selectedQuestion: null,
         selectedLessonQuestions: null,
+        lessonToEdit: null
       })
     } else {
       this.setState({
         selectedLesson: lesson,
         selectedLessonQuestions: lesson.lessonContent,
         selectedLessonTitle: lesson.title,
-        creatingLesson: false
+        creatingLesson: false,
+        lessonToEdit: null
       });
     }
-
   }
 
   handleAddLessonClick (lesson) {
     this.setState({
       creatingLesson: true,
       selectedLesson: null,
-      selectedLessonTitle: null
+      selectedLessonTitle: null,
+      lessonToEdit: null
     });
   }
+
+    //TESTING, CHANGE LESSONS TO USERLESSONS LATER
+  handleSaveNewLessonClick (lesson) {
+    var self = this;
+    addLesson(lesson)
+    .then(id => {
+      getLessonById(id)
+      .then(data => {
+        let newLessons = self.state.lessons;
+        newLessons.push(data);
+        self.setState({
+          lessons: newLessons,
+          creatingLesson: false
+        });
+      })
+    });
+  }
+
+  handleEditLessonClick (lesson) {
+    if (this.state.lessonToEdit && this.state.lessonToEdit.title === lesson.title) {
+      this.setState({
+        selectedLesson: null,
+        selectedLessonQuestions: null,
+        selectedLessonTitle: null,
+        selectedQuestion: null,
+        lessonToEdit: null,
+        creatingQuestion: false,
+        creatingLesson: false
+      })
+    } else {
+      this.setState({
+        selectedLesson: null,
+        selectedLessonQuestions: null,
+        selectedLessonTitle: null,
+        selectedQuestion: null,
+        lessonToEdit: lesson,
+        creatingQuestion: false,
+        creatingLesson: false
+      });
+    }
+  }
+
+  handleUpdateLessonClick (lesson){
+    var self = this;
+    updateLesson(lesson)
+    .then(updatedLesson => {
+      debugger;
+      let id = updatedLesson._id;
+      let newLessons = self.state.lessons;
+      for (var i = 0; i < newLessons.length; i++) {
+        if (newLessons[i].lessonInfo._id === id) {
+          newLessons[i].lessonInfo = updatedLesson;
+          break;
+        }
+      }
+      self.setState({
+        lessons: newLessons,
+        lessonToEdit: null
+      });
+      window.alert('We have updated the lesson')
+    })
+  }
+
+  renderNewLesson(){
+    if (this.state.creatingLesson) {
+      return <NewLesson handleSaveNewLessonClick={this.handleSaveNewLessonClick.bind(this)}/>
+    }
+  }
+  renderEditLesson() {
+    if (this.state.lessonToEdit) {
+      return (
+        <EditLesson
+          lessonToEdit={this.state.lessonToEdit}
+          handleUpdateLessonClick={this.handleUpdateLessonClick.bind(this)}
+        />
+      )
+    }
+  }
+// ********* End of Lesson ********* //
+
+// ********* Question ********* //
 
   handleQuestionClick (question) {
     if (this.state.selectedQuestion === question) {
@@ -104,22 +208,6 @@ class App extends Component {
     this.setState({creatingQuestion: false});
   }
 
-  renderNewQuestion() {
-    if (this.state.creatingQuestion) {
-      return <NewQuestion handleSaveNewQuestionClick={this.handleSaveNewQuestionClick.bind(this)}/>
-    }
-  }
-
-  renderNewLesson(){
-    if (this.state.creatingLesson) {
-      return <NewLesson handleSaveNewLessonClick={this.handleSaveNewQuestionClick.bind(this)}/>
-    }
-  }
-
-  handleSaveNewLessonClick () {
-    this.setState({creatingLesson: false});
-  }
-
   renderQuestionList () {
     if (this.state.selectedLesson) {
       return (
@@ -146,6 +234,13 @@ class App extends Component {
     }
   }
 
+  renderNewQuestion() {
+    if (this.state.creatingQuestion) {
+      return <NewQuestion handleSaveNewQuestionClick={this.handleSaveNewQuestionClick.bind(this)}/>
+    }
+  }
+
+// ********* End of Question ********* //
 
   render() {
     if (this.state.loggedIn) {
@@ -153,11 +248,18 @@ class App extends Component {
         <Row className="App">
           <Navbar display={'lessons'} checkLogin={this.checkLogin}/>
           <div className="container-fluid">
-          <LessonTitleList userLessons={this.state.userLessons} selectedLessonTitle={this.state.selectedLessonTitle} handleLessonClick={this.handleLessonClick.bind(this)} handleAddLessonClick={this.handleAddLessonClick.bind(this)}/>
+
+          <LessonTitleList
+            userLessons={this.state.lessons}
+            selectedLessonTitle={this.state.selectedLessonTitle}
+            handleLessonClick={this.handleLessonClick.bind(this)}
+            handleAddLessonClick={this.handleAddLessonClick.bind(this)}
+            handleEditLessonClick={this.handleEditLessonClick.bind(this)}/>
           {this.renderNewLesson()}
           {this.renderQuestionList()}
           {this.renderQuestionDetail()}
           {this.renderNewQuestion()}
+          {this.renderEditLesson()}
           </div>
         </Row>
       );

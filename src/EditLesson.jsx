@@ -1,30 +1,43 @@
 import React, { Component } from 'react';
 import { Button, Col, FormControl } from 'react-bootstrap';
 
-class newLesson extends Component {
+class EditLesson extends Component {
   constructor (props) {
     super(props)
     this.state = {
       lesson: {
-        title: '',
-        description: '',
-        difficultyRating: '1',
-        category: 'functions'
+        title: this.props.lessonToEdit.title,
+        description: this.props.lessonToEdit.lessonInfo.description,
+        difficultyRating: this.props.lessonToEdit.lessonInfo.difficultyRating,
+        category: this.props.lessonToEdit.lessonInfo.category,
+        lessonId: this.props.lessonToEdit.lessonInfo._id
       }
     };
   }
 
-  handleChange(props, event) {
-    let change = this.state.lesson;
-
-    change[props] = event.target.value;
-
-    this.setState(change);
-    console.log(this.state.lesson);
+  componentWillUpdate(nextProps) {
+    if (nextProps.lessonToEdit.title !== this.props.lessonToEdit.title){
+      console.log(nextProps)
+      this.setState({
+        lesson:{
+          title: nextProps.lessonToEdit.title,
+          description: nextProps.lessonToEdit.lessonInfo.description,
+          difficultyRating: nextProps.lessonToEdit.lessonInfo.difficultyRating,
+          category: nextProps.lessonToEdit.lessonInfo.category,
+          lessonId: nextProps.lessonToEdit.lessonInfo._id
+        }
+      })
+    }
   }
 
-  saveLesson(){
-    this.props.handleSaveNewLessonClick(this.state.lesson)
+  handleChange(props, event) {
+    let change = this.state.lesson;
+    change[props] = event.target.value;
+    this.setState(change);
+  }
+
+  updateLesson(){
+    this.props.handleUpdateLessonClick(this.state.lesson)
   }
 
   renderTitle() {
@@ -32,7 +45,7 @@ class newLesson extends Component {
     return (
       <div>
         <h3>Title</h3>
-        <input style={editableTextStyle} placeholder="title" onChange={this.handleChange.bind(this, 'title')}/>
+        <input style={editableTextStyle} value={this.state.lesson.title} placeholder="title" onChange={this.handleChange.bind(this, 'title')}/>
       </div>
     )
   }
@@ -42,7 +55,7 @@ class newLesson extends Component {
     return (
       <div>
         <h3>Description</h3>
-        <input style={editableTextStyle} placeholder="description" onChange={this.handleChange.bind(this, 'description')}/>
+        <input style={editableTextStyle} value={this.state.lesson.description} placeholder="description" onChange={this.handleChange.bind(this, 'description')}/>
       </div>
     )
   }
@@ -52,8 +65,8 @@ class newLesson extends Component {
     return (
       <div>
         <h3>Difficulty Rating</h3>
-        <FormControl componentClass="select" onChange={this.handleChange.bind(this, 'difficultyRating')}>
-          <option value="1" selected>1</option>
+        <FormControl componentClass="select" value={this.state.lesson.difficultyRating} onChange={this.handleChange.bind(this, 'difficultyRating')}>
+          <option value="1" >1</option>
           <option value="2">2</option>
           <option value="3">3</option>
           <option value="4">4</option>
@@ -69,8 +82,8 @@ class newLesson extends Component {
       <div>
         <h3>Category</h3>
 
-        <FormControl componentClass="select" onChange={this.handleChange.bind(this, 'category')}>
-          <option value="functions" selected>Functions</option>
+        <FormControl componentClass="select" value = {this.state.lesson.category} onChange={this.handleChange.bind(this, 'category')}>
+          <option value="functions">Functions</option>
           <option value="objects">Objects</option>
           <option value="arrays">Arrays</option>
           <option value="es6">es6</option>
@@ -90,7 +103,7 @@ class newLesson extends Component {
         {this.renderDescription()}
         {this.renderDifficultyRating()}
         {this.renderCatogory()}
-        <Button style={saveButtonStyle} onClick= { this.saveLesson.bind(this) } >Save</Button>
+        <Button style={saveButtonStyle} onClick= { this.updateLesson.bind(this) }>Update</Button>
 
       </Col>
     )
@@ -156,4 +169,4 @@ const styles = {
   }
 }
 
-export default newLesson;
+export default EditLesson;

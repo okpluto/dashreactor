@@ -11,13 +11,14 @@ class LessonTitle extends Component {
 
     /*sets the style to be either selected+default or default style alone, depending on the selectedLesson prop in app.js's state.*/
 
-    const { defaultStyle, selectedStyle } = styles;
+    const { defaultStyle, selectedStyle, iconStyle, titleStyle } = styles;
 
-    let titleStyle = this.props.isSelectedLesson ? {...defaultStyle, ...selectedStyle} : defaultStyle
+    let lineStyle = this.props.isSelectedLesson ? {...defaultStyle, ...selectedStyle} : defaultStyle
 
     return (
-      <div style={titleStyle} onClick={this.props.handleLessonClick.bind(this, this.props)}>
-        <p>{this.props.title}</p>
+      <div style={lineStyle} >
+        <p style={titleStyle} onClick={this.props.handleLessonClick.bind(this, this.props)}>{this.props.title}</p>
+        <i style={iconStyle} className="fa fa-pencil" aria-hidden="true" onClick={this.props.handleEditLessonClick.bind(this, this.props)}></i>
       </div>
     );
   }
@@ -36,17 +37,23 @@ const coral = '#FA848A'
 const styles = {
   defaultStyle: {
     backgroundColor: 'white',
-    display: 'block',
     height: 60,
     width: '100%',
     paddingLeft: 10,
     fontFamily: 'Lato',
-    paddingBottom: 15,
     cursor: 'pointer',
   },
   selectedStyle: {
     backgroundColor: coral,
     color: 'white',
+  },
+  titleStyle:{
+    float: 'left',
+    width: '50%'
+  },
+  iconStyle: {
+    float: 'right',
+    marginRight: 10
   }
 
 }

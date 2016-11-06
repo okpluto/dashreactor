@@ -26,6 +26,7 @@ class QuestionDetail extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
+
     this.setState({choices: []})
     this.setState({
       name: nextProps.question.name || '',
@@ -35,6 +36,7 @@ class QuestionDetail extends Component {
       type: nextProps.question.type,
       answerIndex: nextProps.question.choices.indexOf(nextProps.question.answer)
     })
+
   }
 
   getSectionTitle() {
