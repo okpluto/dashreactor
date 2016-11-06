@@ -34,7 +34,10 @@ class App extends Component {
   }
 
   checkLogin() {
-    let self = this
+    this.setState({
+      userLessons: []
+    });
+    let self = this;
     if (localStorage.getItem('userAuth')) {
       const auth = JSON.parse(localStorage.getItem('userAuth'));
       getLessons(auth.jwt)
@@ -44,11 +47,16 @@ class App extends Component {
           getLessonById(lesson._id)
           .then(data => {
             let userLessons = self.state.userLessons;
-            userLessons.push(data);
-            this.setState({userLessons: userLessons});
+            let userId = JSON.parse(localStorage.getItem('userAuth')).id
+            if (data.lessonInfo.creator === userId) {
+              userLessons.push(data);
+              this.setState({userLessons: userLessons});
+            }
           });
         });
+        console.log('USER LESSONS:', this.state.userLessons)
         self.setState({loggedIn: true})
+
       })
     } else {
       if (self.state.loggedIn) {
@@ -109,7 +117,7 @@ class App extends Component {
   }
 
   handleEditLessonClick (lesson) {
-    console.log(lesson);
+    console.log(lesson)
     if (this.state.lessonToEdit && this.state.lessonToEdit.title === lesson.title) {
       this.setState({
         selectedLesson: null,
@@ -146,8 +154,7 @@ class App extends Component {
         }
       }
       self.setState({
-        userLessons: newLessons,
-        lessonToEdit: null
+        userLessons: newLessons
       });
       window.alert('We have updated the lesson')
     })
