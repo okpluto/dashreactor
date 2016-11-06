@@ -22,7 +22,7 @@ class App extends Component {
       selectedLessonTitle: null,
       selectedQuestion: null,
       lessonToEdit: null,
-      //determines whether 'NewQuestion' is visible.
+      //determines whether 'NewQuestion & NewLesson' is visible.
       creatingQuestion: false,
       creatingLesson: false,
       //pulled from DB on authentication
@@ -67,6 +67,7 @@ class App extends Component {
     });
   }
 
+// ********* Lesson ********* //
 
   handleLessonClick (lesson) {
     if (this.state.selectedLesson && this.state.selectedLesson.title === lesson.title) {
@@ -87,7 +88,6 @@ class App extends Component {
         lessonToEdit: null
       });
     }
-
   }
 
   handleAddLessonClick (lesson) {
@@ -99,47 +99,7 @@ class App extends Component {
     });
   }
 
-  handleQuestionClick (question) {
-    if (this.state.selectedQuestion === question) {
-      this.setState({
-        selectedQuestion: null,
-        creatingQuestion: false
-      })
-    } else {
-      this.setState({
-        selectedQuestion: question,
-        creatingQuestion: false
-      })
-    }
-
-  }
-
-//enables appearance of question-creation form (NewQuestion.js)
-  handleAddQuestionClick (question) {
-    this.setState({
-      creatingQuestion: true,
-      selectedQuestion: null
-    });
-  }
-
-//at the moment this just clears the NewQuestion form without saving.
-  handleSaveNewQuestionClick () {
-    this.setState({creatingQuestion: false});
-  }
-
-  renderNewQuestion() {
-    if (this.state.creatingQuestion) {
-      return <NewQuestion handleSaveNewQuestionClick={this.handleSaveNewQuestionClick.bind(this)}/>
-    }
-  }
-
-  renderNewLesson(){
-    if (this.state.creatingLesson) {
-      return <NewLesson handleSaveNewLessonClick={this.handleSaveNewLessonClick.bind(this)}/>
-    }
-  }
-
-  //TESTING, CHANGE LESSONS TO USERLESSONS LATER
+    //TESTING, CHANGE LESSONS TO USERLESSONS LATER
   handleSaveNewLessonClick (lesson) {
     var self = this;
     addLesson(lesson)
@@ -201,6 +161,11 @@ class App extends Component {
     })
   }
 
+  renderNewLesson(){
+    if (this.state.creatingLesson) {
+      return <NewLesson handleSaveNewLessonClick={this.handleSaveNewLessonClick.bind(this)}/>
+    }
+  }
   renderEditLesson() {
     if (this.state.lessonToEdit) {
       return (
@@ -211,6 +176,38 @@ class App extends Component {
       )
     }
   }
+// ********* End of Lesson ********* //
+
+// ********* Question ********* //
+
+  handleQuestionClick (question) {
+    if (this.state.selectedQuestion === question) {
+      this.setState({
+        selectedQuestion: null,
+        creatingQuestion: false
+      })
+    } else {
+      this.setState({
+        selectedQuestion: question,
+        creatingQuestion: false
+      })
+    }
+
+  }
+
+//enables appearance of question-creation form (NewQuestion.js)
+  handleAddQuestionClick (question) {
+    this.setState({
+      creatingQuestion: true,
+      selectedQuestion: null
+    });
+  }
+
+//at the moment this just clears the NewQuestion form without saving.
+  handleSaveNewQuestionClick () {
+    this.setState({creatingQuestion: false});
+  }
+
   renderQuestionList () {
     if (this.state.selectedLesson) {
       return (
@@ -237,6 +234,13 @@ class App extends Component {
     }
   }
 
+  renderNewQuestion() {
+    if (this.state.creatingQuestion) {
+      return <NewQuestion handleSaveNewQuestionClick={this.handleSaveNewQuestionClick.bind(this)}/>
+    }
+  }
+
+// ********* End of Question ********* //
 
   render() {
     if (this.state.loggedIn) {
