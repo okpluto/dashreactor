@@ -50,6 +50,7 @@ class App extends Component {
       }
     }
   }
+
   // TESTING, REMOVE LATER
   componentDidMount() {
     var self = this;
@@ -65,6 +66,7 @@ class App extends Component {
       });
     });
   }
+
 
   handleLessonClick (lesson) {
     if (this.state.selectedLesson && this.state.selectedLesson.title === lesson.title) {
@@ -242,6 +244,7 @@ class App extends Component {
         <Row className="App">
           <Navbar display={'lessons'} checkLogin={this.checkLogin}/>
           <div className="container-fluid">
+
           <LessonTitleList
             userLessons={this.state.lessons}
             selectedLessonTitle={this.state.selectedLessonTitle}
