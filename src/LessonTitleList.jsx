@@ -7,22 +7,6 @@ import { getLessons, getLessonById } from '../services/LessonServices.js';
 class LessonTitleList extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      lessons: [],
-      show: false
-    }
-  }
-
-  componentDidMount() {
-    var self = this;
-    this.props.userLessons.forEach(lesson => {
-      getLessonById(lesson)
-      .then(data => {
-        let lessons = this.state.lessons;
-        lessons.push(data);
-        this.setState({lessons: lessons});
-      });
-    })
   }
 
   render () {
@@ -32,13 +16,16 @@ class LessonTitleList extends Component {
       <Col sm={3} style={LessonTitleListStyle}>
        <i onClick={this.props.handleAddLessonClick} className="fa fa-plus-circle" aria-hidden="true" style={fontAwesomeStyle} ></i>
         {
-          this.state.lessons.map(lesson => {
+          this.props.userLessons.map(lesson => {
             let isSelectedLesson = lesson.lessonInfo.title === this.props.selectedLessonTitle
             return (
               <LessonTitle
                 isSelectedLesson={isSelectedLesson}
                 handleLessonClick={this.props.handleLessonClick.bind(this)}
+                handleEditLessonClick={this.props.handleEditLessonClick.bind(this)}
+                handlePublishLessonClick={this.props.handlePublishLessonClick.bind(this)}
                 title={lesson.lessonInfo.title}
+                lessonInfo={lesson.lessonInfo}
                 lessonContent={lesson.lessonContent}
               />
             )

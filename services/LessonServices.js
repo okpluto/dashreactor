@@ -26,7 +26,53 @@ const getLessonById = function (lessonId) {
   });
 };
 
+const addLesson = function (lesson) {
+  lesson.creator = JSON.parse(localStorage.getItem('userAuth')).id;
+  console.log(lesson)
+  return new Promise((resolve, reject) => {
+    $.ajax({
+      url: 'http://localhost:3011/api/lessons/',
+      type: 'POST',
+      data: lesson,
+      success: resolve,
+      error: reject
+    });
+  })
+}
+
+const updateLesson = function (lesson) {
+  let lessonId = lesson.lessonId;
+  console.log(lesson);
+  return new Promise((resolve, reject) => {
+    $.ajax({
+      url: `http://localhost:3011/api/lessons/${lessonId}`,
+      type: 'PUT',
+      data: lesson,
+      success: resolve,
+      error: reject
+    });
+  })
+}
+
+const publishLesson = function (lesson) {
+  let lessonId = lesson.lessonInfo._id;
+  lesson.lessonInfo.published = true;
+  console.log(lessonId)
+  return new Promise((resolve, reject) => {
+    $.ajax({
+      url: `http://localhost:3011/api/lessons/${lessonId}`,
+      type: 'PUT',
+      data: lesson.lessonInfo,
+      success: resolve,
+      error: reject
+    });
+  })
+}
+
 module.exports = {
   getLessons: getLessons,
-  getLessonById: getLessonById
+  getLessonById: getLessonById,
+  addLesson: addLesson,
+  updateLesson: updateLesson,
+  publishLesson: publishLesson
 };

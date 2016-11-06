@@ -25,7 +25,6 @@ const styles = {
   defaultStyle: {
     width: '100%',
     backgroundColor: 'white',
-    height: 60,
     paddingLeft: 10,
     fontFamily: 'Lato',
     cursor: 'pointer',
