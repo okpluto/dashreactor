@@ -8,7 +8,7 @@ import NewLesson from './NewLesson';
 import EditLesson from './EditLesson';
 import Signin from './Signin'
 import { Row } from 'react-bootstrap';
-import { getLessons, getLessonById, addLesson, updateLesson} from '../services/LessonServices.js';
+import { getLessons, getLessonById, addLesson, updateLesson, publishLesson } from '../services/LessonServices.js';
 import { getUser } from '../services/userServices.js'
 
 
@@ -28,43 +28,33 @@ class App extends Component {
       //pulled from DB on authentication
       loggedIn: false,
       userLessons: [],
-      //TESTING, REMOVE FOLLOWING LINE LATER
-      lessons: []
     }
     this.checkLogin = this.checkLogin.bind(this)
-    //TESTING, REMOVE COMMENT LATER
-    //this.checkLogin()
+    this.checkLogin();
   }
 
   checkLogin() {
     let self = this
     if (localStorage.getItem('userAuth')) {
       const auth = JSON.parse(localStorage.getItem('userAuth'));
-      getUser(auth)
+      getLessons(auth.jwt)
       .then(lessons => {
-        self.setState({loggedIn: true, userLessons: lessons.createdLessons})
+        console.log('ALL LESSONS:', lessons);
+        lessons.map(lesson => {
+          getLessonById(lesson._id)
+          .then(data => {
+            let userLessons = self.state.userLessons;
+            userLessons.push(data);
+            this.setState({userLessons: userLessons});
+          });
+        });
+        self.setState({loggedIn: true})
       })
     } else {
       if (self.state.loggedIn) {
         self.setState({loggedIn: false})
       }
     }
-  }
-
-  // TESTING, REMOVE LATER
-  componentDidMount() {
-    var self = this;
-    getLessons()
-    .then(lessons => {
-      lessons.map(lesson => {
-        getLessonById(lesson._id)
-        .then(data => {
-          let lessons = self.state.lessons;
-          lessons.push(data);
-          self.setState({lessons: lessons});
-        });
-      });
-    });
   }
 
 // ********* Lesson ********* //
@@ -75,8 +65,10 @@ class App extends Component {
         selectedLesson: null,
         selectedLessonTitle: null,
         creatingLesson:false,
+        creatingQuestion: false,
         selectedQuestion: null,
         selectedLessonQuestions: null,
+        selectedLessonTitle:null,
         lessonToEdit: null
       })
     } else {
@@ -84,6 +76,7 @@ class App extends Component {
         selectedLesson: lesson,
         selectedLessonQuestions: lesson.lessonContent,
         selectedLessonTitle: lesson.title,
+        selectedQuestion: null,
         creatingLesson: false,
         lessonToEdit: null
       });
@@ -99,17 +92,16 @@ class App extends Component {
     });
   }
 
-    //TESTING, CHANGE LESSONS TO USERLESSONS LATER
   handleSaveNewLessonClick (lesson) {
     var self = this;
     addLesson(lesson)
     .then(id => {
       getLessonById(id)
       .then(data => {
-        let newLessons = self.state.lessons;
+        let newLessons = self.state.userLessons;
         newLessons.push(data);
         self.setState({
-          lessons: newLessons,
+          userLessons: newLessons,
           creatingLesson: false
         });
       })
@@ -117,6 +109,7 @@ class App extends Component {
   }
 
   handleEditLessonClick (lesson) {
+    console.log(lesson);
     if (this.state.lessonToEdit && this.state.lessonToEdit.title === lesson.title) {
       this.setState({
         selectedLesson: null,
@@ -144,9 +137,8 @@ class App extends Component {
     var self = this;
     updateLesson(lesson)
     .then(updatedLesson => {
-      debugger;
       let id = updatedLesson._id;
-      let newLessons = self.state.lessons;
+      let newLessons = self.state.userLessons;
       for (var i = 0; i < newLessons.length; i++) {
         if (newLessons[i].lessonInfo._id === id) {
           newLessons[i].lessonInfo = updatedLesson;
@@ -154,10 +146,35 @@ class App extends Component {
         }
       }
       self.setState({
-        lessons: newLessons,
+        userLessons: newLessons,
         lessonToEdit: null
       });
       window.alert('We have updated the lesson')
+    })
+  }
+
+  handlePublishLessonClick(lesson) {
+
+    var self = this;
+    publishLesson(lesson)
+    .then(updatedLesson => {
+      console.log('RESPONSE', updatedLesson);
+      let id = updatedLesson._id;
+      let newLessons = self.state.userLessons;
+      for (var i = 0; i < newLessons.length; i++) {
+        if (newLessons[i].lessonInfo._id === id) {
+          newLessons[i].lessonInfo = updatedLesson;
+          break;
+        }
+      }
+      self.setState({
+        userLessons: newLessons,
+        lessonToEdit: null
+      });
+      window.alert('We have published the lesson')
+    })
+    .catch(() => {
+      window.alert('You need to have at least 5 questions to publish a lesson')
     })
   }
 
@@ -250,11 +267,13 @@ class App extends Component {
           <div className="container-fluid">
 
           <LessonTitleList
-            userLessons={this.state.lessons}
+            userLessons={this.state.userLessons}
             selectedLessonTitle={this.state.selectedLessonTitle}
             handleLessonClick={this.handleLessonClick.bind(this)}
             handleAddLessonClick={this.handleAddLessonClick.bind(this)}
-            handleEditLessonClick={this.handleEditLessonClick.bind(this)}/>
+            handleEditLessonClick={this.handleEditLessonClick.bind(this)}
+            handlePublishLessonClick={this.handlePublishLessonClick.bind(this)}
+          />
           {this.renderNewLesson()}
           {this.renderQuestionList()}
           {this.renderQuestionDetail()}

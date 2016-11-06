@@ -7,8 +7,6 @@ import { getLessons, getLessonById } from '../services/LessonServices.js';
 class LessonTitleList extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-    }
   }
 
   render () {
@@ -25,6 +23,7 @@ class LessonTitleList extends Component {
                 isSelectedLesson={isSelectedLesson}
                 handleLessonClick={this.props.handleLessonClick.bind(this)}
                 handleEditLessonClick={this.props.handleEditLessonClick.bind(this)}
+                handlePublishLessonClick={this.props.handlePublishLessonClick.bind(this)}
                 title={lesson.lessonInfo.title}
                 lessonInfo={lesson.lessonInfo}
                 lessonContent={lesson.lessonContent}
