@@ -40,7 +40,7 @@ class QuestionDetail extends Component {
   }
 
   getSectionTitle() {
-    return this.state.type === "question" ? (<h2>Question</h2>) : (<h2>Reading</h2>)
+    return this.state.type === "question" ? (<h3>Question</h3>) : (<h3>Reading</h3>)
   }
 
   setEditBoxHeight(style) {
@@ -58,7 +58,7 @@ class QuestionDetail extends Component {
     return (
       <div>
         <div>
-          <h2>Name</h2>
+          <h3>Name</h3>
           <textArea
             style={ nameInputStyle }
             value={this.state.name}
@@ -112,7 +112,7 @@ class QuestionDetail extends Component {
       const { fontAwesomeStyle } = styles;
         return (
           <div>
-            <h2>Answers</h2>
+            <h3>Answers</h3>
             {this.state.choices.map((choice, index) =>
               <Answer choice={choice} key={index} index={index} change={this.handleChange} color={this.getAnswerCheckColor(index)} setAnswer={this.setAnswer}/>
             )}
@@ -169,13 +169,13 @@ const lightGrey = '#A3A8AB'
 const styles = {
   QuestionDetailStyle: {
     height: '100%',
-    fontSize: 20,
+    fontSize:  16,
     position: 'fixed',
-    paddingTop: 90,
+    paddingTop: 60,
     width: '100%',
     textWrap: true,
-    paddingRight: 0,
-    paddingLeft:40,
+    paddingRight: 30,
+    paddingLeft: 30,
     fontFamily: 'Lato',
     zIndex: -1,
     overflow: 'scroll',
