@@ -260,7 +260,10 @@ class App extends Component {
 
   renderNewQuestion() {
     if (this.state.creatingQuestion) {
-      return <NewQuestion handleSaveNewQuestionClick={this.handleSaveNewQuestionClick.bind(this)}/>
+      return <NewQuestion
+        handleSaveNewQuestionClick={this.handleSaveNewQuestionClick.bind(this)}
+        selectedLessonId={this.state.selectedLessonId}
+        selectedLessonQuestions={this.state.selectedLessonQuestions} />
     }
   }
 
