@@ -31,6 +31,7 @@ const addLesson = function (lesson) {
     $.ajax({
       url: 'http://localhost:3011/api/lessons/',
       type: 'POST',
+      data: lesson,
       success: resolve,
       error: reject
     });
@@ -38,10 +39,13 @@ const addLesson = function (lesson) {
 }
 
 const updateLesson = function (lesson) {
+  console.log(lesson)
+  let lessonId = lesson.lessonId;
   return new Promise((resolve, reject) => {
     $.ajax({
-      url: 'http://localhost:3011/api/lessons/',
+      url: `http://localhost:3011/api/lessons/${lessonId}`,
       type: 'PUT',
+      data: lesson,
       success: resolve,
       error: reject
     });
@@ -50,5 +54,7 @@ const updateLesson = function (lesson) {
 
 module.exports = {
   getLessons: getLessons,
-  getLessonById: getLessonById
+  getLessonById: getLessonById,
+  addLesson: addLesson,
+  updateLesson: updateLesson
 };

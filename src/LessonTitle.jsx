@@ -16,9 +16,9 @@ class LessonTitle extends Component {
     let lineStyle = this.props.isSelectedLesson ? {...defaultStyle, ...selectedStyle} : defaultStyle
 
     return (
-      <div style={lineStyle} onClick={this.props.handleLessonClick.bind(this, this.props)}>
-        <p style={titleStyle}>{this.props.title}</p>
-        <i style={iconStyle} className="fa fa-pencil" aria-hidden="true"></i>
+      <div style={lineStyle} >
+        <p style={titleStyle} onClick={this.props.handleLessonClick.bind(this, this.props)}>{this.props.title}</p>
+        <i style={iconStyle} className="fa fa-pencil" aria-hidden="true" onClick={this.props.handleEditLessonClick.bind(this, this.props)}></i>
       </div>
     );
   }
