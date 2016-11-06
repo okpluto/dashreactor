@@ -39,7 +39,6 @@ const addLesson = function (lesson) {
 }
 
 const updateLesson = function (lesson) {
-  console.log(lesson)
   let lessonId = lesson.lessonId;
   return new Promise((resolve, reject) => {
     $.ajax({
