@@ -52,5 +52,5 @@ app.put('/api/content/:id', contentHandlers.updateContentById);
 app.delete('/api/content/:id', contentHandlers.deleteContentById);
 
 app.listen(process.env.PORT || 3011, () => {
-  log.info(`Listening on port ${process.env.PORT || 3011}.`);
+  console.log(`Listening on port ${process.env.PORT || 3011}.`);
 });

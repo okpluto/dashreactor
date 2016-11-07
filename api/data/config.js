@@ -19,6 +19,3 @@ connection.once('open', function() {
 
 module.exports = connection;
 
-// Import dummy data provided by dummy-data/index.js
-// For debug and testing purposes only
-var dummyData = require('./dummy-data');
