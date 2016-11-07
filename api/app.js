@@ -8,7 +8,7 @@ const contentHandlers = require('./routes/content-route-handlers');
 const lessonHandlers = require('./routes/lesson-route-handlers');
 const userHandlers = require('./routes/user-route-handlers');
 const checkAuth = require('./helpers/checkAuth');
-const log = require('./helpers/log');
+
 const db = require('./data/config');
 
 const app = express();
@@ -25,10 +25,7 @@ app.use((req, res, next) => {
 });
 
 // Log out requests for debug
-app.use((req, res, next) => {
-  log.info(`Request recieved from ${req.url} with method ${req.method}.`);
-  next();
-});
+
 // Serving dashreactor static files
 app.use('/static', publicPath)
 

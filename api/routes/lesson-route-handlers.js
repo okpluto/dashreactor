@@ -5,7 +5,7 @@ const User = require('../data/models/user')
 
 const ObjectId = mongoose.Types.ObjectId;
 
-const log = require('../helpers/log');
+
 const send500 = require('../helpers/send500');
 const send404 = require('../helpers/send404');
 
@@ -13,7 +13,7 @@ exports.getAllLessons = (req, res) => {
 
   Lesson.find({}, (err, lessons) => {
     if (err) {
-      log.error(err);
+      console.log(err);
       return;
     }
     res.status(200).json(lessons);
@@ -46,13 +46,13 @@ exports.createLesson = (req, res) => {
   new Lesson(req.body)
     .save((err, lesson) => {
       if (err) {
-        log.error("Rut roh~ ", err);
+        console.log("Rut roh~ ", err);
         send500(res, "Lesson wasn't saved correctly!!");
       } else {
         //Save the lesson id on the user
         User.update({ _id: req.body.creator }, { $push: { createdLessons: lesson._id } }, (err, user) => {
           if (err) {
-            log.error(err)
+            console.log(err)
           }
           log.amazing(user)
         })
@@ -66,7 +66,7 @@ exports.updateLessonById = (req, res) => {
   const id = req.params.id;
   Lesson.findById(id, function(err, lesson) {
     if (err) {
-      log.error(err);
+      console.log(err);
     }
     for (var key in req.body) {
       // Update average rating
@@ -85,7 +85,7 @@ exports.updateLessonById = (req, res) => {
     }
     lesson.save(function(err, updatedLesson) {
       if (err) {
-        log.error(err);
+        console.log(err);
       }
       res.status(200).send(updatedLesson);
     })

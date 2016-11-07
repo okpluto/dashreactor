@@ -4,14 +4,13 @@ const jwt = require('jwt-simple');
 
 const ObjId = mongoose.Types.ObjectId;
 
-const log = require('../helpers/log');
 const send500 = require('../helpers/send500');
 const send404 = require('../helpers/send404');
 
 exports.getUsers = (req, res) => {
   User.find({}, (err, users) => {
     if (err) {
-      log.error(err);
+      console.log(err);
       send404(res, 'No Users Found')
       return;
     }
@@ -79,7 +78,7 @@ exports.updateUserById = (req, res) => {
       title: req.body.title,
       score: req.body.score
     } } }, (err, user) => {
-      err ? log.error(err) : log.amazing("added lesson results to user")
+      if(err) console.log(err)
     // Update streak of days user has taken lessons
     let day = new Date(req.body.lastLessonDate).getDay().toString()
     if (req.body.streak === 'reset') {
@@ -87,13 +86,13 @@ exports.updateUserById = (req, res) => {
         streak: [day],
         lastLessonDate: req.body.lastLessonDate
       } }, (err, user) => {
-        err ? log.error(err) : log.amazing("Streak reset")
+        if(err) console.log(err)
       })
     } else if (req.body.streak === 'same') {
       User.update({ _id: req.params.id}, { $set: {
         lastLessonDate: req.body.lastLessonDate
       } }, (err, user) => {
-        err ? log.error(err) : log.amazing("Updated last lesson date, streak unchanged")
+        if(err) console.log(err)
       })
     } else if (req.body.streak === 'add') {
       User.update({ _id: req.params.id }, {
@@ -103,7 +102,7 @@ exports.updateUserById = (req, res) => {
         $set: {
           lastLessonDate: req.body.lastLessonDate
         } }, (err, user) => {
-          err ? log.error(err) : log.amazing("Added to streak")
+          if(err) console.log(err)
         })
     }
   })
