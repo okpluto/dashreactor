@@ -1,3 +1,4 @@
+'use strict'
 /* Config.js
  *
  * This file handles connecting to the database and loads dummy data.

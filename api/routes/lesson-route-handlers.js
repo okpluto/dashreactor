@@ -1,3 +1,4 @@
+'use strict'
 const mongoose = require('mongoose');
 const Lesson = require('../data/models/lesson');
 const Content = require('../data/models/content');
@@ -35,7 +36,6 @@ exports.getLessonAndContentsById = (req, res) => {
       }
 
       result.lessonContent.push(...content);
-      log.success('Successfully retrieved lesson.');
       res.status(200).json(result);
     });
   });
@@ -54,9 +54,7 @@ exports.createLesson = (req, res) => {
           if (err) {
             console.log(err)
           }
-          log.amazing(user)
         })
-        log.success("Lesson created")
         res.status(201).send(lesson._id);
       }
     });

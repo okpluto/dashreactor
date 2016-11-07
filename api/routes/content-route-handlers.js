@@ -1,3 +1,4 @@
+'use strict'
 const mongoose = require('mongoose');
 const Content = require('../data/models/content');
 const Lesson = require('../data/models/lesson');
