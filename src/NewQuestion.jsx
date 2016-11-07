@@ -69,12 +69,12 @@ class newQuestion extends Component {
     super(props)
     this.state = {
       lessonId: this.props.selectedLessonId,
-      name: "",
+      name: null,
       order: this.props.selectedLessonQuestions.length,
       type: 'question',
       text: '',
-      choices: [''],
-      answer: '',
+      choices: [null],
+      answer: null,
       answerIndex: null,
     }
     this.handleChange = this.handleChange.bind(this);
