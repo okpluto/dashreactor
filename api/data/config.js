@@ -6,7 +6,7 @@
 var mongoose = require('mongoose');
 var log = require('../helpers/log');
 
-mongoose.connect('mongodb://localhost/scripty');
+mongoose.connect(process.env.MONGOLAB_URI);
 
 var connection = mongoose.connection;
 
