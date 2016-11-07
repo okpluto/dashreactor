@@ -15,7 +15,7 @@ class SignInForm extends React.Component {
 
   handleSignInClick() {
     let self = this
-    let url=`http://localhost:3011/api/users/signin`;
+    let url=`api/users/signin`;
     const data = {
       username: this.state.username,
       password: this.state.password
