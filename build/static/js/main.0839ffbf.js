@@ -38155,7 +38155,7 @@
 	  }, {
 	    key: 'saveUpdates',
 	    value: function saveUpdates() {
-	      var url = 'http://localhost:3011/api/content/' + this.props.question._id;
+	      var url = 'api/content/' + this.props.question._id;
 	      var data = this.state;
 	      var self = this;
 	      data.choices = data.choices.filter(function (choice) {
@@ -48801,4 +48801,4 @@
 
 /***/ }
 /******/ ])));
-//# sourceMappingURL=main.469edff9.js.map
+//# sourceMappingURL=main.0839ffbf.js.map
