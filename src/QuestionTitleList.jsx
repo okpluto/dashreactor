@@ -33,7 +33,7 @@ class QuestionTitleList extends Component {
             let isSelectedQuestion;
 
             if (this.props.selectedQuestion) {
-              isSelectedQuestion = this.props.selectedQuestion.text === question.text
+              isSelectedQuestion = this.props.selectedQuestion === question
             }
 
 

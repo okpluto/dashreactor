@@ -129,7 +129,6 @@ class App extends Component {
   }
 
   handleEditLessonClick (lesson) {
-    console.log(lesson)
     if (this.state.lessonToEdit && this.state.lessonToEdit.title === lesson.title) {
       this.setState({
         selectedLesson: null,
@@ -155,7 +154,7 @@ class App extends Component {
 
   handleUpdateLessonClick (lesson){
     var self = this;
-    updateLesson(lesson)
+    updateLesson(this.state.selectedLesson)
     .then(updatedLesson => {
       let id = updatedLesson._id;
       let newLessons = self.state.userLessons;
@@ -173,9 +172,8 @@ class App extends Component {
   }
 
   handlePublishLessonClick(lesson) {
-
     var self = this;
-    publishLesson(lesson)
+    publishLesson(this.state.selectedLesson)
     .then(updatedLesson => {
       console.log('RESPONSE', updatedLesson);
       let id = updatedLesson._id;
@@ -243,14 +241,14 @@ class App extends Component {
 //at the moment this just clears the NewQuestion form without saving.
   handleSaveNewQuestionClick (question) {
     var self = this;
-
-    getLessonById(this.state.selectedLesson.lessonId)
+    getLessonById(this.state.selectedLesson.lessonInfo._id)
     .then(data => {
       let newLessonContent = self.state.selectedLessonQuestions;
       newLessonContent.push(question)
       this.setState({
         creatingQuestion: false,
-        selectedLessonQuestions: newLessonContent
+        selectedLessonQuestions: newLessonContent,
+        selectedLesson: data
       });
       window.alert('Saved New Question')
     });
@@ -272,7 +270,6 @@ class App extends Component {
         selectedLessonQuestions: newLessonContent,
         selectedQuestion: null
       });
-      console.log(this.state.selectedLessonQuestions);
       window.alert('Updated Question');
     });
   }
