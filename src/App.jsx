@@ -263,7 +263,6 @@ class App extends Component {
       for (var i = 0; i < newLessonContent.length; i++) {
         if (newLessonContent[i]._id === question._id) {
           newLessonContent[i] = question;
-          break;
         }
       }
       this.setState({
