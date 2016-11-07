@@ -10,8 +10,9 @@ mongoose.connect(process.env.MONGOLAB_URI);
 
 var connection = mongoose.connection;
 
-connection.on('error',
-  console.log('Error connecting to MongoDB:'));
+connection.on('error', function() {
+  console.log('Error connecting to MongoDB:')
+});
 connection.once('open', function() {
   console.log('Connected to MongoDB.');
 });
