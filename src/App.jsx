@@ -35,7 +35,17 @@ class App extends Component {
 
   checkLogin() {
     this.setState({
-      userLessons: []
+      selectedLesson: null,
+      selectedLessonQuestions: null,
+      selectedLessonTitle: null,
+      selectedQuestion: null,
+      lessonToEdit: null,
+      //determines whether 'NewQuestion & NewLesson' is visible.
+      creatingQuestion: false,
+      creatingLesson: false,
+      //pulled from DB on authentication
+      loggedIn: false,
+      userLessons: [],
     });
     let self = this;
     if (localStorage.getItem('userAuth')) {
@@ -183,7 +193,8 @@ class App extends Component {
       window.alert('We have published the lesson')
     })
     .catch(() => {
-      window.alert('You need to have at least 5 questions to publish a lesson')
+      window.alert('You need to have at least 5 questions to publish a lesson');
+      lesson.lessonInfo.published = false;
     })
   }
 
@@ -230,8 +241,40 @@ class App extends Component {
   }
 
 //at the moment this just clears the NewQuestion form without saving.
-  handleSaveNewQuestionClick () {
-    this.setState({creatingQuestion: false});
+  handleSaveNewQuestionClick (question) {
+    var self = this;
+
+    getLessonById(this.state.selectedLesson.lessonId)
+    .then(data => {
+      let newLessonContent = self.state.selectedLessonQuestions;
+      newLessonContent.push(question)
+      this.setState({
+        creatingQuestion: false,
+        selectedLessonQuestions: newLessonContent
+      });
+      window.alert('Saved New Question')
+    });
+  }
+
+  handleUpdateQuestionClick(question) {
+    var self = this;
+    getLessonById(this.state.selectedLesson.lessonId)
+    .then(data => {
+      let newLessonContent = self.state.selectedLessonQuestions;
+      let isNewContent = false;
+      for (var i = 0; i < newLessonContent.length; i++) {
+        if (newLessonContent[i]._id === question._id) {
+          newLessonContent[i] = question;
+          break;
+        }
+      }
+      this.setState({
+        selectedLessonQuestions: newLessonContent,
+        selectedQuestion: null
+      });
+      console.log(this.state.selectedLessonQuestions);
+      window.alert('Updated Question');
+    });
   }
 
   renderQuestionList () {
@@ -255,6 +298,7 @@ class App extends Component {
         <QuestionDetail
           title={this.state.selectedLessonTitle}
           question={this.state.selectedQuestion}
+          handleUpdateQuestion={this.handleUpdateQuestionClick.bind(this)}
         />
       )
     }
