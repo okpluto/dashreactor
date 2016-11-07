@@ -35,7 +35,17 @@ class App extends Component {
 
   checkLogin() {
     this.setState({
-      userLessons: []
+      selectedLesson: null,
+      selectedLessonQuestions: null,
+      selectedLessonTitle: null,
+      selectedQuestion: null,
+      lessonToEdit: null,
+      //determines whether 'NewQuestion & NewLesson' is visible.
+      creatingQuestion: false,
+      creatingLesson: false,
+      //pulled from DB on authentication
+      loggedIn: false,
+      userLessons: [],
     });
     let self = this;
     if (localStorage.getItem('userAuth')) {
@@ -233,6 +243,7 @@ class App extends Component {
 //at the moment this just clears the NewQuestion form without saving.
   handleSaveNewQuestionClick (question) {
     var self = this;
+
     getLessonById(this.state.selectedLesson.lessonId)
     .then(data => {
       let newLessonContent = self.state.selectedLessonQuestions;
