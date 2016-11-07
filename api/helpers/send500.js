@@ -1,6 +1,6 @@
 
 
-module.exports = (res, message = 'Something went wrong!') => {
+module.exports = (res, message) => {
 
   res.status(500).send(message);
 };
