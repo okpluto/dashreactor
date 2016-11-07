@@ -154,7 +154,7 @@ class App extends Component {
 
   handleUpdateLessonClick (lesson){
     var self = this;
-    updateLesson(this.state.selectedLesson)
+    updateLesson(lesson)
     .then(updatedLesson => {
       let id = updatedLesson._id;
       let newLessons = self.state.userLessons;
@@ -256,7 +256,7 @@ class App extends Component {
 
   handleUpdateQuestionClick(question) {
     var self = this;
-    getLessonById(this.state.selectedLesson.lessonId)
+    getLessonById(this.state.selectedLesson.lessonInfo._id)
     .then(data => {
       let newLessonContent = self.state.selectedLessonQuestions;
       let isNewContent = false;
