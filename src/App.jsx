@@ -239,8 +239,7 @@ class App extends Component {
       newLessonContent.push(question)
       this.setState({
         creatingQuestion: false,
-        selectedLessonQuestions: newLessonContent,
-        selectedQuestion: question
+        selectedLessonQuestions: newLessonContent
       });
       window.alert('Saved New Question')
     });
@@ -259,9 +258,8 @@ class App extends Component {
         }
       }
       this.setState({
-        creatingQuestion: false,
         selectedLessonQuestions: newLessonContent,
-        selectedQuestion: question
+        selectedQuestion: null
       });
       console.log(this.state.selectedLessonQuestions);
       window.alert('Updated Question');
