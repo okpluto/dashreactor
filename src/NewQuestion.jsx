@@ -75,7 +75,7 @@ class newQuestion extends Component {
       text: '',
       choices: [''],
       answer: '',
-      answerIndex: 0,
+      answerIndex: null,
     }
     this.handleChange = this.handleChange.bind(this);
     this.setAnswer = this.setAnswer.bind(this);
