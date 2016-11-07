@@ -27,6 +27,7 @@ class LessonTitleList extends Component {
                 title={lesson.lessonInfo.title}
                 lessonInfo={lesson.lessonInfo}
                 lessonContent={lesson.lessonContent}
+                lessonId={lesson.lessonInfo._id}
               />
             )
           })

@@ -72,6 +72,7 @@ class App extends Component {
       this.setState({
         selectedLesson: null,
         selectedLessonTitle: null,
+        selectedLessonId: null,
         creatingLesson:false,
         creatingQuestion: false,
         selectedQuestion: null,
@@ -84,6 +85,7 @@ class App extends Component {
         selectedLesson: lesson,
         selectedLessonQuestions: lesson.lessonContent,
         selectedLessonTitle: lesson.title,
+        selectedLessonId: lesson.lessonId,
         selectedQuestion: null,
         creatingLesson: false,
         lessonToEdit: null
@@ -260,7 +262,10 @@ class App extends Component {
 
   renderNewQuestion() {
     if (this.state.creatingQuestion) {
-      return <NewQuestion handleSaveNewQuestionClick={this.handleSaveNewQuestionClick.bind(this)}/>
+      return <NewQuestion
+        handleSaveNewQuestionClick={this.handleSaveNewQuestionClick.bind(this)}
+        selectedLessonId={this.state.selectedLessonId}
+        selectedLessonQuestions={this.state.selectedLessonQuestions} />
     }
   }
 
