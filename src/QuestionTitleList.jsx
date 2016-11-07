@@ -6,11 +6,20 @@ import { Col } from 'react-bootstrap';
 class QuestionTitleList extends Component {
   constructor(props) {
     super(props);
-    // this.state = {
-    //   lessons: LessonDummyData
-    // }
+    this.state = {
+      lessonContent: this.props.lessonContent
+    }
   }
 
+  componentWillUpdate(nextProps) {
+
+    if (nextProps.lessonContent !== this.props.lessonContent){
+      console.log('Triggered', nextProps)
+      this.setState({
+        lessonContent: nextProps.lessonContent
+      })
+    }
+  }
 
   render () {
 
@@ -20,7 +29,7 @@ class QuestionTitleList extends Component {
       <Col sm={3} smOffset={4} xs={3} xsOffset={5} style={questionListStyle} >
         <i onClick={this.props.handleAddQuestionClick} className="fa fa-plus-circle" aria-hidden="true" style={fontAwesomeStyle} ></i>
         {
-          this.props.lessonContent.map(question => {
+          this.state.lessonContent.map(question => {
             let isSelectedQuestion;
 
             if (this.props.selectedQuestion) {
@@ -31,7 +40,7 @@ class QuestionTitleList extends Component {
 
             return (
               <QuestionTitle
-                title={question.text}
+                title={question.name}
                 questionContent={question}
                 isSelectedQuestion={isSelectedQuestion}
                 handleQuestionClick={this.props.handleQuestionClick.bind(this)}
@@ -70,6 +79,7 @@ const styles = {
     display: 'inline',
     marginLeft: 10,
     fontSize: 40,
+    cursor:'pointer'
   },
 }
 

@@ -136,7 +136,8 @@ class QuestionDetail extends Component {
 
   saveUpdates() {
     let url = `http://localhost:3011/api/content/${this.props.question._id}`
-    let data = this.state
+    let data = this.state;
+    var self = this;
     data.choices = data.choices.filter(choice => choice !== '')
     fetch(url, {
       method: 'PUT',
@@ -146,7 +147,12 @@ class QuestionDetail extends Component {
       },
       body: JSON.stringify(data)
     })
-    .then(res => res.json())
+    .then(res => {
+      return res.json();
+    })
+    .then(data => {
+      self.props.handleUpdateQuestion(data);
+    })
     .catch(err => {
       console.log(err)
     })

@@ -231,8 +231,41 @@ class App extends Component {
   }
 
 //at the moment this just clears the NewQuestion form without saving.
-  handleSaveNewQuestionClick () {
-    this.setState({creatingQuestion: false});
+  handleSaveNewQuestionClick (question) {
+    var self = this;
+    getLessonById(this.state.selectedLesson.lessonId)
+    .then(data => {
+      let newLessonContent = self.state.selectedLessonQuestions;
+      newLessonContent.push(question)
+      this.setState({
+        creatingQuestion: false,
+        selectedLessonQuestions: newLessonContent,
+        selectedQuestion: question
+      });
+      window.alert('Saved New Question')
+    });
+  }
+
+  handleUpdateQuestionClick(question) {
+    var self = this;
+    getLessonById(this.state.selectedLesson.lessonId)
+    .then(data => {
+      let newLessonContent = self.state.selectedLessonQuestions;
+      let isNewContent = false;
+      for (var i = 0; i < newLessonContent.length; i++) {
+        if (newLessonContent[i]._id === question._id) {
+          newLessonContent[i] = question;
+          break;
+        }
+      }
+      this.setState({
+        creatingQuestion: false,
+        selectedLessonQuestions: newLessonContent,
+        selectedQuestion: question
+      });
+      console.log(this.state.selectedLessonQuestions);
+      window.alert('Updated Question');
+    });
   }
 
   renderQuestionList () {
@@ -256,6 +289,7 @@ class App extends Component {
         <QuestionDetail
           title={this.state.selectedLessonTitle}
           question={this.state.selectedQuestion}
+          handleUpdateQuestion={this.handleUpdateQuestionClick.bind(this)}
         />
       )
     }
