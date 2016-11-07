@@ -5,16 +5,15 @@
  **/
 
 var mongoose = require('mongoose');
-var log = require('../helpers/log');
 
 mongoose.connect(process.env.MONGOLAB_URI);
 
 var connection = mongoose.connection;
 
 connection.on('error',
-  log.error.bind(null, 'Error connecting to MongoDB:'));
+  console.log('Error connecting to MongoDB:'));
 connection.once('open', function() {
-  log.info('Connected to MongoDB.');
+  console.log('Connected to MongoDB.');
 });
 
 module.exports = connection;
