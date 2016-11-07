@@ -33,7 +33,7 @@ class Navbar extends Component {
     return (
       <Col className="Navbar" style={navbarStyle}>
        {/* <h2 className="brand" style={brandStyle}>Dash Reactor</h2>*/}
-        <img alt="dashReactorLogo" src={require('../public/dashReactorLogo.png')} style={{marginLeft: 10, marginTop: -90}}/>
+        <img alt="dashReactorLogo" src={require('../public/scriptyDbLogo.png')} style={{marginLeft: 28, marginTop: -70, width: 28}}/>
         <i className="fa fa-book fa-2x" aria-hidden="true" style={getStyle('lessons', this.state.selected)}></i>
         <br />
 
