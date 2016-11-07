@@ -219,7 +219,7 @@ class newQuestion extends Component {
     console.log("About to save: ", this.state);
     saveQuestion(this.state)
     .then(data => {
-      this.handleSaveNewQuestionClick(this.state);
+      this.handleSaveNewQuestionClick(data);
     })
     .catch(err => {
       console.log(err)
