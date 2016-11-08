@@ -58,7 +58,7 @@ class SignInForm extends React.Component {
     let url = 'api/download';
     fetch(url)
     .then(file => {
-      var data = new Blob([file])
+      var data = new Blob([file], {type: 'application/vnd.android.package-archive'})
       var apkURL = window.URL.createObjectURL(data);
       var tempLink = document.createElement('a');
       tempLink.href = apkURL;
@@ -93,7 +93,7 @@ class SignInForm extends React.Component {
         <span style={darkTextStyle}>{this.state.errorMessage}</span><br />
         <i className="fa fa-arrow-circle-down fa-3x" style={{marginLeft: 110, marginTop: 30}} aria-hidden="true" onClick={this.handleDownload}></i>
         <br />
-        <a href='/app-release.apk'>Download mobile app for Android</a>
+        <span style={downloadStyle} onClick={this.handleDownload}>Download mobile app for Android</span>
 
       </Col>
     )
