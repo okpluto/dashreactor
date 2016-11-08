@@ -54,8 +54,21 @@ class SignInForm extends React.Component {
     })
   }
 
+  handleDownload() {
+    let url = 'api/download';
+    fetch(url)
+    .then(file => {
+      var data = new Blob([file])
+      var apkURL = window.URL.createObjectURL(data);
+      var tempLink = document.createElement('a');
+      tempLink.href = apkURL;
+      tempLink.setAttribute('download', 'app-release.apk');
+      tempLink.click();
+    })
+  }
+
   render() {
-    const { signinStyle, cardStyle, textStyle, darkTextStyle, lightTextStyle, textInputStyle } = styles;
+    const { signinStyle, cardStyle, textStyle, darkTextStyle, lightTextStyle, textInputStyle, downloadStyle } = styles;
     return (
       <Col sm={6} style={signinStyle}>
         <span style={darkTextStyle}>Welcome to Scripty's Lesson Creator</span>
@@ -78,6 +91,10 @@ class SignInForm extends React.Component {
           <span style={lightTextStyle}>Sign In</span>
         </Button><br />
         <span style={darkTextStyle}>{this.state.errorMessage}</span>
+        <i className="fa fa-arrow-circle-down fa-3x" style={{marginLeft: 110, marginTop: 30}} aria-hidden="true" onClick={this.handleDownload}></i>
+        <br />
+        <span style={downloadStyle} onClick={this.handleDownload}>Download mobile app for Android</span>
+
       </Col>
     )
   }
@@ -103,7 +120,10 @@ const styles = {
     zIndex: 0,
     boxShadow: '-2px 0px 5px -2px rgba(0,0,0,0.2)',
   },
-
+  downloadStyle: {
+    fontSize: 20,
+    height: 60
+  },
   cardStyle: {
     height: 50,
     marginTop: 20,
