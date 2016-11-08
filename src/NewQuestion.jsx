@@ -69,13 +69,13 @@ class newQuestion extends Component {
     super(props)
     this.state = {
       lessonId: this.props.selectedLessonId,
-      name: "",
+      name: null,
       order: this.props.selectedLessonQuestions.length,
       type: 'question',
       text: '',
-      choices: [''],
-      answer: '',
-      answerIndex: 0,
+      choices: [null],
+      answer: null,
+      answerIndex: null,
     }
     this.handleChange = this.handleChange.bind(this);
     this.setAnswer = this.setAnswer.bind(this);
@@ -219,7 +219,7 @@ class newQuestion extends Component {
     console.log("About to save: ", this.state);
     saveQuestion(this.state)
     .then(data => {
-      this.handleSaveNewQuestionClick(this.state);
+      this.handleSaveNewQuestionClick(data);
     })
     .catch(err => {
       console.log(err)

@@ -29,7 +29,11 @@ class QuestionTitleList extends Component {
       <Col sm={3} smOffset={4} xs={3} xsOffset={5} style={questionListStyle} >
         <i onClick={this.props.handleAddQuestionClick} className="fa fa-plus-circle" aria-hidden="true" style={fontAwesomeStyle} ></i>
         {
-          this.state.lessonContent.map(question => {
+          this.state.lessonContent
+          .sort(function(currContent, nextContent) {
+            return currContent.order - nextContent.order;
+          })
+          .map(question => {
             let isSelectedQuestion;
 
             if (this.props.selectedQuestion) {
