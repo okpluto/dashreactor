@@ -18,7 +18,7 @@ var SALT_WORK_FACTOR = 10;
  **/
 let today = new Date()
 let day = today.getDay()
-
+day = 1
 const userSchema = mongoose.Schema({
   name: String,
   password: String,
