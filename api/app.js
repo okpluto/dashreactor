@@ -2,6 +2,9 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const path = require('path')
+const mime = require('mime')
+const fs = require('fs')
+
 const indexPath = path.join(__dirname, '/../build/index.html')
 const publicPath = express.static(path.join(__dirname, '/../build/static'))
 
@@ -50,6 +53,11 @@ app.get('/api/content/:id', contentHandlers.getContentById);
 app.post('/api/content', contentHandlers.createContent);
 app.put('/api/content/:id', contentHandlers.updateContentById);
 app.delete('/api/content/:id', contentHandlers.deleteContentById);
+// Let users download android app
+app.get('/api/download', (req, res) => {
+  let file = __dirname + '/app-release.apk';
+  res.download(file)
+})
 
 app.listen(process.env.PORT || 3011, () => {
   console.log(`Listening on port ${process.env.PORT || 3011}.`);
