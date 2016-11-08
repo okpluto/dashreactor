@@ -91,6 +91,10 @@ class SignInForm extends React.Component {
           <span style={lightTextStyle}>Sign In</span>
         </Button><br />
         <span style={darkTextStyle}>{this.state.errorMessage}</span><br />
+        <i className="fa fa-arrow-circle-down fa-3x" style={{marginLeft: 110, marginTop: 30}} aria-hidden="true" onClick={this.handleDownload}></i>
+        <br />
+        <a href='/app-release.apk'>Download mobile app for Android</a>
+
       </Col>
     )
   }
