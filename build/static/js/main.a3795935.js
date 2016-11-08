@@ -38482,14 +38482,7 @@
 	          { style: darkTextStyle },
 	          this.state.errorMessage
 	        ),
-	        _react2.default.createElement('br', null),
-	        _react2.default.createElement('i', { className: 'fa fa-arrow-circle-down fa-3x', style: { marginLeft: 110, marginTop: 30 }, 'aria-hidden': 'true', onClick: this.handleDownload }),
-	        _react2.default.createElement('br', null),
-	        _react2.default.createElement(
-	          'span',
-	          { style: downloadStyle, onClick: this.handleDownload },
-	          'Download mobile app for Android'
-	        )
+	        _react2.default.createElement('br', null)
 	      );
 	    }
 	  }]);
@@ -48824,4 +48817,4 @@
 
 /***/ }
 /******/ ])));
-//# sourceMappingURL=main.842c5046.js.map
+//# sourceMappingURL=main.a3795935.js.map
