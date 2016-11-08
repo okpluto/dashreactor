@@ -20354,11 +20354,13 @@
 	        _reactBootstrap.Col,
 	        { sm: 3, smOffset: 4, xs: 3, xsOffset: 5, style: questionListStyle },
 	        _react2.default.createElement('i', { onClick: this.props.handleAddQuestionClick, className: 'fa fa-plus-circle', 'aria-hidden': 'true', style: fontAwesomeStyle }),
-	        this.state.lessonContent.map(function (question) {
+	        this.state.lessonContent.sort(function (currContent, nextContent) {
+	          return currContent.order - nextContent.order;
+	        }).map(function (question) {
 	          var isSelectedQuestion = void 0;
 	
 	          if (_this2.props.selectedQuestion) {
-	            isSelectedQuestion = _this2.props.selectedQuestion.text === question.text;
+	            isSelectedQuestion = _this2.props.selectedQuestion === question;
 	          }
 	
 	          return _react2.default.createElement(_QuestionTitle2.default, {
@@ -36330,7 +36332,6 @@
 	  }, {
 	    key: 'handleEditLessonClick',
 	    value: function handleEditLessonClick(lesson) {
-	      console.log(lesson);
 	      if (this.state.lessonToEdit && this.state.lessonToEdit.title === lesson.title) {
 	        this.setState({
 	          selectedLesson: null,
@@ -36375,9 +36376,8 @@
 	  }, {
 	    key: 'handlePublishLessonClick',
 	    value: function handlePublishLessonClick(lesson) {
-	
 	      var self = this;
-	      (0, _LessonServices.publishLesson)(lesson).then(function (updatedLesson) {
+	      (0, _LessonServices.publishLesson)(this.state.selectedLesson).then(function (updatedLesson) {
 	        console.log('RESPONSE', updatedLesson);
 	        var id = updatedLesson._id;
 	        var newLessons = self.state.userLessons;
@@ -36453,13 +36453,13 @@
 	      var _this3 = this;
 	
 	      var self = this;
-	
-	      (0, _LessonServices.getLessonById)(this.state.selectedLesson.lessonId).then(function (data) {
+	      (0, _LessonServices.getLessonById)(this.state.selectedLesson.lessonInfo._id).then(function (data) {
 	        var newLessonContent = self.state.selectedLessonQuestions;
 	        newLessonContent.push(question);
 	        _this3.setState({
 	          creatingQuestion: false,
-	          selectedLessonQuestions: newLessonContent
+	          selectedLessonQuestions: newLessonContent,
+	          selectedLesson: data
 	        });
 	        window.alert('Saved New Question');
 	      });
@@ -36470,20 +36470,18 @@
 	      var _this4 = this;
 	
 	      var self = this;
-	      (0, _LessonServices.getLessonById)(this.state.selectedLesson.lessonId).then(function (data) {
+	      (0, _LessonServices.getLessonById)(this.state.selectedLesson.lessonInfo._id).then(function (data) {
 	        var newLessonContent = self.state.selectedLessonQuestions;
 	        var isNewContent = false;
 	        for (var i = 0; i < newLessonContent.length; i++) {
 	          if (newLessonContent[i]._id === question._id) {
 	            newLessonContent[i] = question;
-	            break;
 	          }
 	        }
 	        _this4.setState({
 	          selectedLessonQuestions: newLessonContent,
 	          selectedQuestion: null
 	        });
-	        console.log(_this4.state.selectedLessonQuestions);
 	        window.alert('Updated Question');
 	      });
 	    }
@@ -37685,13 +37683,13 @@
 	
 	    _this.state = {
 	      lessonId: _this.props.selectedLessonId,
-	      name: "",
+	      name: null,
 	      order: _this.props.selectedLessonQuestions.length,
 	      type: 'question',
 	      text: '',
-	      choices: [''],
-	      answer: '',
-	      answerIndex: 0
+	      choices: [null],
+	      answer: null,
+	      answerIndex: null
 	    };
 	    _this.handleChange = _this.handleChange.bind(_this);
 	    _this.setAnswer = _this.setAnswer.bind(_this);
@@ -37906,7 +37904,7 @@
 	
 	      console.log("About to save: ", this.state);
 	      (0, _QuestionServices.saveQuestion)(this.state).then(function (data) {
-	        _this3.handleSaveNewQuestionClick(_this3.state);
+	        _this3.handleSaveNewQuestionClick(data);
 	      }).catch(function (err) {
 	        console.log(err);
 	      });
@@ -38414,6 +38412,19 @@
 	      });
 	    }
 	  }, {
+	    key: 'handleDownload',
+	    value: function handleDownload() {
+	      var url = 'api/download';
+	      fetch(url).then(function (file) {
+	        var data = new Blob([file]);
+	        var apkURL = window.URL.createObjectURL(data);
+	        var tempLink = document.createElement('a');
+	        tempLink.href = apkURL;
+	        tempLink.setAttribute('download', 'app-release.apk');
+	        tempLink.click();
+	      });
+	    }
+	  }, {
 	    key: 'render',
 	    value: function render() {
 	      var _this3 = this;
@@ -38424,6 +38435,7 @@
 	      var darkTextStyle = styles.darkTextStyle;
 	      var lightTextStyle = styles.lightTextStyle;
 	      var textInputStyle = styles.textInputStyle;
+	      var downloadStyle = styles.downloadStyle;
 	
 	      return _react2.default.createElement(
 	        _reactBootstrap.Col,
@@ -38469,6 +38481,14 @@
 	          'span',
 	          { style: darkTextStyle },
 	          this.state.errorMessage
+	        ),
+	        _react2.default.createElement('br', null),
+	        _react2.default.createElement('i', { className: 'fa fa-arrow-circle-down fa-3x', style: { marginLeft: 110, marginTop: 30 }, 'aria-hidden': 'true', onClick: this.handleDownload }),
+	        _react2.default.createElement('br', null),
+	        _react2.default.createElement(
+	          'span',
+	          { style: downloadStyle, onClick: this.handleDownload },
+	          'Download mobile app for Android'
 	        )
 	      );
 	    }
@@ -38495,7 +38515,10 @@
 	    zIndex: 0,
 	    boxShadow: '-2px 0px 5px -2px rgba(0,0,0,0.2)'
 	  },
-	
+	  downloadStyle: {
+	    fontSize: 20,
+	    height: 60
+	  },
 	  cardStyle: {
 	    height: 50,
 	    marginTop: 20,
@@ -48801,4 +48824,4 @@
 
 /***/ }
 /******/ ])));
-//# sourceMappingURL=main.0839ffbf.js.map
+//# sourceMappingURL=main.a6e378c7.js.map
