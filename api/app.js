@@ -31,7 +31,7 @@ app.use((req, res, next) => {
 // Log out requests for debug
 
 // Serving dashreactor static files
-app.use('/static', publicPath)
+app.use('/static', publicPath);
 
 // Define routes
 app.get('/', function (_, res) { res.sendFile(indexPath) })
