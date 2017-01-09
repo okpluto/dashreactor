@@ -14,7 +14,7 @@ class LessonTitleList extends Component {
 
     return (
       <Col sm={3} style={LessonTitleListStyle}>
-       <i onClick={this.props.handleAddLessonClick} className="fa fa-plus-circle" aria-hidden="true" style={fontAwesomeStyle} ></i>
+       <span style={fontAwesomeStyle} onClick={this.props.handleAddLessonClick}><i className="fa fa-plus-circle" aria-hidden="true" style={{fontSize: 40}}></i>Add a lesson</span>
         {
           this.props.userLessons.map(lesson => {
             let isSelectedLesson = lesson.lessonInfo.title === this.props.selectedLessonTitle
@@ -56,7 +56,7 @@ const styles = {
     color: '#DADCDD',
     display: 'inline',
     marginLeft: 10,
-    fontSize: 40,
+    fontSize: 20,
     cursor: 'pointer'
   },
 }
