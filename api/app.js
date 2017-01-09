@@ -59,6 +59,6 @@ app.get('/api/download', (req, res) => {
   res.download(file)
 })
 
-app.listen(process.env.PORT || 3011, () => {
-  console.log(`Listening on port ${process.env.PORT || 3011}.`);
+app.listen(process.env.PORT || 3001, () => {
+  console.log(`Listening on port ${process.env.PORT || 3001}.`);
 });
