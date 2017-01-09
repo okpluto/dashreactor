@@ -52,7 +52,6 @@ class App extends Component {
       const auth = JSON.parse(localStorage.getItem('userAuth'));
       getLessons(auth.jwt)
       .then(lessons => {
-        console.log('ALL LESSONS:', lessons);
         lessons.map(lesson => {
           getLessonById(lesson._id)
           .then(data => {
@@ -64,9 +63,7 @@ class App extends Component {
             }
           });
         });
-        console.log('USER LESSONS:', this.state.userLessons)
         self.setState({loggedIn: true})
-
       })
     } else {
       if (self.state.loggedIn) {
