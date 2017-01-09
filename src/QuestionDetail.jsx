@@ -135,7 +135,7 @@ class QuestionDetail extends Component {
   }
 
   saveUpdates() {
-    let url = `http://localhost:3011/api/content/${this.props.question._id}`
+    let url = `api/content/${this.props.question._id}`
     let data = this.state;
     var self = this;
     data.choices = data.choices.filter(choice => choice !== '')

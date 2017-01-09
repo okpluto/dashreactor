@@ -27,7 +27,7 @@ class QuestionTitleList extends Component {
 
     return (
       <Col sm={3} smOffset={4} xs={3} xsOffset={5} style={questionListStyle} >
-        <i onClick={this.props.handleAddQuestionClick} className="fa fa-plus-circle" aria-hidden="true" style={fontAwesomeStyle} ></i>
+       <span style={fontAwesomeStyle} onClick={this.props.handleAddQuestionClick}><i className="fa fa-plus-circle" aria-hidden="true" style={{fontSize: 40}}></i>Add a question</span>
         {
           this.state.lessonContent
           .sort(function(currContent, nextContent) {
@@ -82,7 +82,7 @@ const styles = {
     color: '#DADCDD',
     display: 'inline',
     marginLeft: 10,
-    fontSize: 40,
+    fontSize: 20,
     cursor:'pointer'
   },
 }

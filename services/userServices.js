@@ -4,7 +4,7 @@ var Promise = require('bluebird');
 const getUser = function (auth) {
   return new Promise((resolve, reject) => {
     $.ajax({
-      url: `http://localhost:3011/api/users/${auth.id}`,
+      url: `api/users/${auth.id}`,
       type: 'GET',
       headers: {
         'Authorization': auth.jwt

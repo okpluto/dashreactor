@@ -15,7 +15,7 @@ class SignInForm extends React.Component {
 
   handleSignInClick() {
     let self = this
-    let url=`http://localhost:3011/api/users/signin`;
+    let url=`api/users/signin`;
     const data = {
       username: this.state.username,
       password: this.state.password
@@ -54,8 +54,21 @@ class SignInForm extends React.Component {
     })
   }
 
+  handleDownload() {
+    let url = 'api/download';
+    fetch(url)
+    .then(file => {
+      var data = new Blob([file], {type: 'application/vnd.android.package-archive'})
+      var apkURL = window.URL.createObjectURL(data);
+      var tempLink = document.createElement('a');
+      tempLink.href = apkURL;
+      tempLink.setAttribute('download', 'app-release.apk');
+      tempLink.click();
+    })
+  }
+
   render() {
-    const { signinStyle, cardStyle, textStyle, darkTextStyle, lightTextStyle, textInputStyle } = styles;
+    const { signinStyle, cardStyle, textStyle, darkTextStyle, lightTextStyle, textInputStyle, downloadStyle } = styles;
     return (
       <Col sm={6} style={signinStyle}>
         <span style={darkTextStyle}>Welcome to Scripty's Lesson Creator</span>
@@ -77,7 +90,7 @@ class SignInForm extends React.Component {
         <Button onClick={this.handleSignInClick} style={cardStyle} >
           <span style={lightTextStyle}>Sign In</span>
         </Button><br />
-        <span style={darkTextStyle}>{this.state.errorMessage}</span>
+        <span style={darkTextStyle}>{this.state.errorMessage}</span><br />
       </Col>
     )
   }
@@ -103,7 +116,10 @@ const styles = {
     zIndex: 0,
     boxShadow: '-2px 0px 5px -2px rgba(0,0,0,0.2)',
   },
-
+  downloadStyle: {
+    fontSize: 20,
+    height: 60
+  },
   cardStyle: {
     height: 50,
     marginTop: 20,
